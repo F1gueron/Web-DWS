@@ -90,6 +90,12 @@ public class PostController {
         return fileService.createResponseFromFile(POSTS_FOLDER, id);
     }
 
+    @GetMapping("/post/{id}/image")
+    public ResponseEntity<Object> downloadImage(@PathVariable int id) throws MalformedURLException {
+
+        return imageService.createResponseFromImage(POSTS_FOLDER, id);
+    }
+
     @GetMapping("/post/{id}/delete")
     public String deletePost(Model model, @PathVariable long id) throws IOException {
 
