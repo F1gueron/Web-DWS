@@ -2,9 +2,19 @@
 <body>
 <p>Author: {{post.author}}</p>
 <p>Title: {{post.title}}</p>
+{{#post.date}}
 <p>Date: {{post.date}}</p>
+{{/post.date}}
+{{^post.date}}
+<p>No fecha</p>
+{{/post.date}}
 <p>Text: {{post.text}}</p>
-<img src="/post/{{post.id}}/image"> <!--Supose to be the competition or post logo to make it as the background or header image-->
+{{#post.image}}
+<img src="/post/{{post.id}}/image">
+{{/post.image}}
+{{^post.image}}
+<p>No hay imagenes</p>
+{{/post.image}}
 <p>Click the link below to download the file:</p>
 <a href="/post/{{post.id}}/file" download>Download File</a>
 <a href="/post/{{post.id}}/delete">Delete post</a>
