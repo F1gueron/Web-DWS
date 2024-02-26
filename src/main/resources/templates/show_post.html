@@ -15,7 +15,7 @@
 <p>Text: {{post.text}}</p>
 
 {{#image}}
-    <img src="/post/{{post.id}}/image">
+    <img src="/post/{{post.id}}/image"> <!-- Use for background, etc -->
 {{/image}}
 
 {{^image}}
@@ -24,13 +24,12 @@
 
 {{#file}}
     <p>Click the link below to download the file:</p>
-    <a href="/post/{{post.id}}/file">Download File</a>
+    <a href="/post/{{post.id}}/file">Download</a>
 {{/file}}
 
 {{^file}}
     <p>No files attached to this post.</p>
 {{/file}}
-
 
 <a href="/post/{{post.id}}/delete">Delete post</a>
 <br>
