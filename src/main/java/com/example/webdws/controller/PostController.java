@@ -58,14 +58,36 @@ public class PostController {
         return "new_post";
     }
 
+
+    /*
+        This function creates a post with (if exists) an Image and (if exists) a File.
+        It checks if we passed a file or not to change the post parameter so it changes when resolving the image into the html (same with the file).
+
+        Function : newPost
+        param : Model, post, image, file
+        returns : "saved_posts" route.
+
+        TODO: Falta meter para que los nombres de la imagen y de los archivos se generen aleatoriamente.
+
+     */
+
     @PostMapping("/post/new")
     public String newPost(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
 
         postService.save(post);
 
-        imageService.saveImage(POSTS_FOLDER, post.getId(), image);
 
-        fileService.saveFile(POSTS_FOLDER, post.getId(), file);
+
+        if ( !image.getOriginalFilename().isEmpty() ){
+            imageService.saveImage(POSTS_FOLDER, post.getId(), image);
+            post.setIsImage(true);
+        }
+
+        if ( !file.getOriginalFilename().isEmpty() ){
+            fileService.saveFile(POSTS_FOLDER, post.getId(), file);
+            post.setIsFile(true);
+        }
+
 
         authorSession.setAuthor(post.getAuthor());
         authorSession.incNumPosts();
@@ -79,7 +101,8 @@ public class PostController {
     public String showPost(Model model, @PathVariable long id) {
 
         Post post = postService.findById(id);
-
+        model.addAttribute("image", post.getIsImage());
+        model.addAttribute("file", post.getIsFile());
         model.addAttribute("post", post);
 
         return "show_post";
@@ -88,6 +111,12 @@ public class PostController {
     public ResponseEntity<Object> downloadFile(@PathVariable int id) throws MalformedURLException {
 
         return fileService.createResponseFromFile(POSTS_FOLDER, id);
+    }
+
+    @GetMapping("/post/{id}/image")
+    public ResponseEntity<Object> downloadImage(@PathVariable int id) throws MalformedURLException {
+
+        return imageService.createResponseFromImage(POSTS_FOLDER, id);
     }
 
     @GetMapping("/post/{id}/delete")

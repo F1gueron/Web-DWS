@@ -1,5 +1,7 @@
 package com.example.webdws.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDate;
 
 public class Post {
@@ -8,21 +10,35 @@ public class Post {
     private String author;
     private String title;
     private String text;
+    private boolean isImage = false; // Variable to check if there is an image in the post.
+    private boolean isFile = false; // IDEM
+
+    public boolean getIsFile() {
+        return isFile;
+    }
+
+    public void setIsFile(boolean file) {
+        this.isFile = file;
+    }
 
     private LocalDate date;
 
-    public Post() {
-
-    }
-
     public LocalDate getDate() {
         return date;
+    }
+
+    public Boolean getIsImage(){
+        return isImage;
+    }
+    public void setIsImage(boolean image) {
+        this.isImage = image;
     }
 
     public void setDate(LocalDate date) {
         this.date = date;
     }
 
+    public Post(){}
 
     public Post(String author, String title, String text, LocalDate date) {
         super();
@@ -30,6 +46,13 @@ public class Post {
         this.title = title;
         this.text = text;
         this.date = date;
+    }
+
+    public Post(String author, String title, String text) {
+        super();
+        this.author = author;
+        this.title = title;
+        this.text = text;
     }
 
     public Long getId() {
