@@ -9,5 +9,4 @@ public class WebDwsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WebDwsApplication.class, args);
 	}
-
 }
