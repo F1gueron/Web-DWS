@@ -1,22 +1,37 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <body>
 <p>Author: {{post.author}}</p>
 <p>Title: {{post.title}}</p>
+
 {{#post.date}}
-<p>Date: {{post.date}}</p>
+    <p>Date: {{post.date}}</p>
 {{/post.date}}
+
 {{^post.date}}
-<p>No fecha</p>
+    <p>This post has no date assigned.</p>
 {{/post.date}}
+
 <p>Text: {{post.text}}</p>
-{{#post.image}}
-<img src="/post/{{post.id}}/image">
-{{/post.image}}
-{{^post.image}}
-<p>No hay imagenes</p>
-{{/post.image}}
-<p>Click the link below to download the file:</p>
-<a href="/post/{{post.id}}/file" download>Download File</a>
+
+{{#image}}
+    <img src="/post/{{post.id}}/image">
+{{/image}}
+
+{{^image}}
+    <p>No images found for this post.</p>
+{{/image}}
+
+{{#file}}
+    <p>Click the link below to download the file:</p>
+    <a href="/post/{{post.id}}/file">Download File</a>
+{{/file}}
+
+{{^file}}
+    <p>No files attached to this post.</p>
+{{/file}}
+
+
 <a href="/post/{{post.id}}/delete">Delete post</a>
 <br>
 

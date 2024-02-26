@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImageService {
 
     private static final Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "images");
-
     private Path createFilePath(long imageId, Path folder) {
         return folder.resolve("image-" + imageId + ".jpg");
     }
@@ -56,4 +55,6 @@ public class ImageService {
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(file);
         }
     }
+
+
 }
