@@ -49,6 +49,15 @@ public class PostController {
 
         return "index";
     }
+    @GetMapping("/writeups")
+    public String showWriteups(Model model, HttpSession session) {
+
+        //model.addAttribute("posts", postService.findAll());
+        //model.addAttribute("welcome", session.isNew());
+
+        return "../static/writeups";
+    }
+
 
     @GetMapping("/post/new")
     public String newPostForm(Model model) {
