@@ -10,9 +10,6 @@ public class Post {
     private String author;
     private String title;
     private String text;
-    private boolean isImage = false; // Variable to check if there is an image in the post.
-    private boolean isFile = false; // IDEM
-
     private String imageName = ""; // Name for embedded image
     private String fileName = "";  // Name for embedded file
 
@@ -32,25 +29,10 @@ public class Post {
         this.fileName = fileName;
     }
 
-    public boolean getIsFile() {
-        return isFile;
-    }
-
-    public void setIsFile(boolean file) {
-        this.isFile = file;
-    }
-
     private LocalDate date;
 
     public LocalDate getDate() {
         return date;
-    }
-
-    public Boolean getIsImage(){
-        return isImage;
-    }
-    public void setIsImage(boolean image) {
-        this.isImage = image;
     }
 
     public void setDate(LocalDate date) {

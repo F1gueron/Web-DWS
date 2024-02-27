@@ -17,8 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImageService {
 
     private static final Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "images");
-    private Path createFilePath(long imageId, Path folder) {
-        return folder.resolve("image-" + imageId + ".jpg");
+    private Path createFilePath(Path folder, String fileName) {
+        return folder.resolve(fileName);
     }
 
     /*
@@ -42,20 +42,20 @@ public class ImageService {
         image.transferTo(newFile);
     }
 
-    public void deleteImage(String folderName, long imageId) throws IOException {
+    public void deleteImage(String folderName, String fileName) throws IOException {
 
         Path folder = FILES_FOLDER.resolve(folderName);
 
-        Path imageFile = createFilePath(imageId, folder);
+        Path imageFile = createFilePath(folder, fileName);
 
         Files.deleteIfExists(imageFile);
     }
 
-    public ResponseEntity<Object> createResponseFromImage(String folderName, long imageId) throws MalformedURLException {
+    public ResponseEntity<Object> createResponseFromImage(String folderName, String fileName) throws MalformedURLException {
 
         Path folder = FILES_FOLDER.resolve(folderName);
 
-        Path imagePath = createFilePath(imageId, folder);
+        Path imagePath = createFilePath(folder, fileName);
 
         Resource file = new UrlResource(imagePath.toUri());
 

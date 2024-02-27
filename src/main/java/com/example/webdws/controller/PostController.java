@@ -42,14 +42,21 @@ public class PostController {
     private FileService fileService;
 
 
-    @GetMapping("/")
+    @GetMapping("/posts")
     public String showPosts(Model model, HttpSession session) {
 
         model.addAttribute("posts", postService.findAll());
         model.addAttribute("welcome", session.isNew());
 
+        return "posts";
+    }
+
+    @GetMapping("/")
+    public String landingPage(Model model, HttpSession session) {
+
         return "index";
     }
+
     @GetMapping("/writeups")
     public String showWriteups(Model model, HttpSession session) {
 
@@ -97,7 +104,7 @@ public class PostController {
 
      */
 
-    @GetMapping("/post/todo")
+    @GetMapping("/todo")
     public String todo(){
         return "todo";
     }
