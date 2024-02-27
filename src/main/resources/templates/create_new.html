@@ -6,16 +6,47 @@
     <script src="../static/script.js"></script>
 </head>
 <body>
-<form>
+<form id="myForm">
     <input type="radio" name="element" value="">
-    <label for="Writeup">Writeup</label><br>
+    <label >Writeup</label><br>
     <input type="radio" name="element" value="Challenge" >
-    <label for="News">News</label><br>
+    <label >News</label><br>
     <input type="radio" name="element" value="CTF">
-    <label for="CTF">CTF</label><br>
+    <label >CTF</label><br>
     <input type="radio" name="element" value="CTF">
-    <label for="Discuss">Discussion forum</label><br>
+    <label >Discussion forum</label><br>
 </form>
+
+<button id="continueBtn" style="display:none;">Continue</button>
+
+<script>
+    const form = document.getElementById('myForm');
+    const continueBtn = document.getElementById('continueBtn');
+
+    form.addEventListener('click', function() {
+        continueBtn.style.display = 'inline';
+    });
+
+    continueBtn.addEventListener('click', function() {
+        const selectedOption = document.querySelector('input[name="element"]:checked').value;
+        switch (selectedOption) {
+            case 'Writeup':
+                window.location.href = 'index.html';
+                break;
+            case 'News':
+                window.location.href = 'deleted_post.html';
+                break;
+            case 'CTF':
+                window.location.href = 'saved_posts.html';
+                break;
+            case 'Discussion':
+                window.location.href = 'show_post.html';
+                break;
+            default:
+                break;
+        }
+    });
+</script>
 
 
 </body>
