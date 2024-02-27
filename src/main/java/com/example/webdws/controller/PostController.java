@@ -165,8 +165,8 @@ public class PostController {
 
     @GetMapping("/post/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable int id) throws MalformedURLException {
-
-        return imageService.createResponseFromImage(POSTS_FOLDER, id);
+        String a = "a";
+        return imageService.createResponseFromImage(POSTS_FOLDER, a);
     }
 
     @GetMapping("/post/{id}/delete")
@@ -174,7 +174,7 @@ public class PostController {
 
         postService.deleteById(id);
 
-        imageService.deleteImage(POSTS_FOLDER, id);
+       // imageService.deleteImage(POSTS_FOLDER, id);
 
         return "deleted_post";
     }

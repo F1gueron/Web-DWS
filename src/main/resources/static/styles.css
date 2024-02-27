@@ -4,14 +4,13 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* background-color: #24252A; */
-    background-color: #061824;
+    background-color: #111111;
 }
 
 li, a, button {
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 25px;
     color: #edf0f1;
     text-decoration: none;
 }
@@ -30,19 +29,9 @@ header {
     margin-right: auto ;
 }
 
-.logo-container span {
-    margin-left: 10px;
-    color: #edf0f1;
-    font-family: "Inter", sans-serif;
-    font-size: 25px;
-    font-weight: 500;
-}
-
 .logo {
     cursor: pointer;
-    
-    height: 80px;
-    width: 70px;
+    width: 45%;
 }
 
 .nav-links {
@@ -64,7 +53,7 @@ header {
 
 button {
     padding: 9px 25px; 
-    background-color: rgba(0,136,169, 1);
+    background-color: rgba(0,86,13, 1);
     border: none;
     border-radius: 50px;
     cursor: pointer;
@@ -72,7 +61,7 @@ button {
 }
 
 button:hover{
-    background-color: rgba(0,136,169, 0.8);
+    background-color: rgba(0,86,13, 0.8);
 
 }
 
