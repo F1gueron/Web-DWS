@@ -21,14 +21,24 @@ public class ImageService {
         return folder.resolve("image-" + imageId + ".jpg");
     }
 
-    public void saveImage(String folderName, long imageId, MultipartFile image) throws IOException {
+    /*
+        This function saves the image inside the server. Uses the UUID generated imageName and concatenates it with the imageId to avoid duplicates.
+
+        Function : saveImage
+        param : folderName, imageId, image, imageName
+        returns : void
+
+
+
+     */
+
+    public void saveImage(String folderName, long imageId, MultipartFile image, String imageName) throws IOException {
 
         Path folder = FILES_FOLDER.resolve(folderName);
 
         Files.createDirectories(folder);
-
-        Path newFile = createFilePath(imageId, folder);
-
+        String final_fileName = imageId + "_" + imageName; //
+        Path newFile = folder.resolve(final_fileName);
         image.transferTo(newFile);
     }
 

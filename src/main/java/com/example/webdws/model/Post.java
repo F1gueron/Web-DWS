@@ -13,6 +13,25 @@ public class Post {
     private boolean isImage = false; // Variable to check if there is an image in the post.
     private boolean isFile = false; // IDEM
 
+    private String imageName = ""; // Name for embedded image
+    private String fileName = "";  // Name for embedded file
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     public boolean getIsFile() {
         return isFile;
     }

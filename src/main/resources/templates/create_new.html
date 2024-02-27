@@ -3,48 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="../static/script.js"></script>
 </head>
 <body>
+<h2>What do you want to create?</h2>
+<hr>
 <form id="myForm">
-    <input type="radio" name="element" value="">
+    <input type="radio" name="element" value="writeup">
     <label >Writeup</label><br>
-    <input type="radio" name="element" value="Challenge" >
-    <label >News</label><br>
-    <input type="radio" name="element" value="CTF">
+    <input type="radio" name="element" value="post" >
+    <label >Post</label><br>
+    <input type="radio" name="element" value="ctf">
     <label >CTF</label><br>
-    <input type="radio" name="element" value="CTF">
+    <input type="radio" name="element" value="discussion-forum">
     <label >Discussion forum</label><br>
 </form>
 
-<button id="continueBtn" style="display:none;">Continue</button>
+<br>
+<button id="continueBtn" disabled>Continue</button>
 
 <script>
     const form = document.getElementById('myForm');
     const continueBtn = document.getElementById('continueBtn');
 
     form.addEventListener('click', function() {
-        continueBtn.style.display = 'inline';
+        continueBtn.disabled = false;
     });
 
     continueBtn.addEventListener('click', function() {
         const selectedOption = document.querySelector('input[name="element"]:checked').value;
         switch (selectedOption) {
-            case 'Writeup':
-                window.location.href = 'index.html';
+            case 'writeup':
+                window.location.href = '/post/todo';
                 break;
-            case 'News':
-                window.location.href = 'deleted_post.html';
+            case 'post':
+                window.location.href = '/post/newpost';
                 break;
-            case 'CTF':
-                window.location.href = 'saved_posts.html';
+            case 'ctf':
+                window.location.href = '/post/todo';
                 break;
-            case 'Discussion':
-                window.location.href = 'show_post.html';
+            case 'discussion-forum':
+                window.location.href = '/post/todo';
                 break;
             default:
                 break;
         }
+
     });
 </script>
 
