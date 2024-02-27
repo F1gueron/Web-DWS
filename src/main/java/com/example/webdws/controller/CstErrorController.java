@@ -29,13 +29,13 @@ public class CstErrorController implements ErrorController {
             Integer status_code = Integer.valueOf(status.toString());
 
             if (status_code == HttpStatus.NOT_FOUND.value()){
-                return "error/404";
+                return "../static/error/404";
             }
             else if (status_code == HttpStatus.INTERNAL_SERVER_ERROR.value()){
-                return "error/500";
+                return "../static/error/500";
             }
         }
 
-        return "error/error";
+        return "../static/error/error";
     }
 }

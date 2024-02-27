@@ -64,7 +64,7 @@ public class PostController {
 
         model.addAttribute("author", authorSession.getAuthor());
 
-        return "new_post";
+        return "create_new";
     }
 
 
