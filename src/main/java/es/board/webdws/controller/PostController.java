@@ -159,6 +159,16 @@ public class PostController {
 
         return uploadData(model, post, image, file);
     }
+    /*
+        This function receives everything we need to create a post, checks if file and/or image exist(s) and sends it to uploadHandler.
+        Sets the author if exists, and increases the number of posts created to send it to saved_post template.
+
+        function : uploadData
+        param: model, post, image, file
+        returns: saved_posts.html page ("POST ADDED!")
+
+
+     */
 
     private String uploadData(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
         if (!image.isEmpty()){
@@ -210,6 +220,14 @@ public class PostController {
     // Methods to handle images and files, probably remove image later, as it's a type of file
 
 
+    /*
+        This function saves the post, and creates a random UUID filename for the file it receives, checks if it is an image or a file and saves it using the appropiate class.
+        function : uploadHandler
+        param : file, post
+        returns : void
+
+     */
+
     private void uploadHandler(MultipartFile file, Post post) throws IOException {
         postService.save(post);
         String old_fileName = file.getOriginalFilename();
@@ -224,37 +242,4 @@ public class PostController {
         post.setFileName(new_fileName);
     }
 
-
-/*
-    private void fileHandlerer(MultipartFile file, Post post) throws IOException {
-
-        postService.save(post);
-
-        String old_fileName = file.getOriginalFilename();
-
-        if ( !old_fileName.isEmpty() ){
-
-            String new_fileName = UUID.randomUUID().toString();
-            String fileExtension = old_fileName.substring(old_fileName.lastIndexOf("."));
-            fileService.saveFile(POSTS_FOLDER, post.getId(), file, new_fileName + fileExtension);
-            post.setFileName(new_fileName);
-        }
-    }
-
-
-    private void imageHandlerer(MultipartFile image, Post post) throws IOException{
-        postService.save(post);
-        String old_imageName = image.getOriginalFilename();
-
-        if ( !old_imageName.isEmpty() ){
-
-            String new_imageName = UUID.randomUUID().toString();
-            String fileExtension = old_imageName.substring(old_imageName.lastIndexOf("."));
-            imageService.saveImage(POSTS_FOLDER, post.getId(), image, new_imageName + fileExtension);
-
-            post.setImageName(new_imageName);
-        }
-    }
-
- */
 }
