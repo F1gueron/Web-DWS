@@ -9,23 +9,29 @@
 </head>
 <body>
 <header>
-    <div href="/" class="logo-container"><img class="logo"  src="images/logo_bien.png" alt="logo"></div>
+    <div class="logo-container"><img class="logo" src="images/logo.jpeg" alt="logo"><span>CyberSecLabs</span></div>
     <nav>
         <ul class="nav-links">
             <li><a href="/writeups">Writeups</a></li>
             <li><a href="/posts">Forum</a></li>
             <li><a href="/todo">Events</a></li>
-            <li><a href="/post/new">New</a></li>
-            <!-- <li><a style="font-weight: bold;" href="/todo">My profile</a> </li> -->
         </ul>
     </nav>
-    <a class="cta" href="/todo"><button>My profile</button></a>
+    <a class="cta" href="/todo"><button>Login</button></a>
 </header>
 <hr>
 
+<h1>Posts</h1>
 
-<h1>Welcome to our Cybersecurity Blog!</h1>
+{{#posts}}
+<a href="post/{{id}}">{{author}} {{title}}</a><br>
+{{/posts}}
 
+{{^posts}}
+<p>No posts yet.</p>
+{{/posts}}
 
+<br>
+<a href="post/new">New Post</a>
 </body>
 </html>

@@ -23,8 +23,10 @@
 {{/image}}
 
 {{#file}}
-    <p>Click the link below to download the file:</p>
-    <a href="/post/{{post.id}}/file">Download</a>
+    <div class="inline-container">
+        <p>Download link:</p>
+        <a href="/post/{{post.id}}/file" style="display: inline;">Download</a>
+    </div>
 {{/file}}
 
 {{^file}}

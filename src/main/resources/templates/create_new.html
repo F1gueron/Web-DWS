@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>What do you want to create?</h2>
+<hr>
+<form id="myForm">
+    <input type="radio" name="element" value="writeup">
+    <label >Writeup</label><br>
+    <input type="radio" name="element" value="post" >
+    <label >Post</label><br>
+    <input type="radio" name="element" value="ctf">
+    <label >CTF</label><br>
+    <input type="radio" name="element" value="discussion-forum">
+    <label >Discussion forum</label><br>
+</form>
+
+<br>
+<button id="continueBtn" disabled>Continue</button>
+
+<script>
+    const form = document.getElementById('myForm');
+    const continueBtn = document.getElementById('continueBtn');
+
+    form.addEventListener('click', function() {
+        continueBtn.disabled = false;
+    });
+
+    continueBtn.addEventListener('click', function() {
+        const selectedOption = document.querySelector('input[name="element"]:checked').value;
+        switch (selectedOption) {
+            case 'writeup':
+                window.location.href = '/post/newwriteup';
+                break;
+            case 'post':
+                window.location.href = '/post/newpost';
+                break;
+            case 'ctf':
+                window.location.href = '/post/newctf';
+                break;
+            case 'discussion-forum':
+                window.location.href = '/post/newforum';
+                break;
+            default:
+                break;
+        }
+
+    });
+</script>
+
+
+</body>
+</html>

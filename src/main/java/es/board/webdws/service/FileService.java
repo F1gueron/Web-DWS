@@ -1,4 +1,4 @@
-package com.example.webdws.service;
+package es.board.webdws.service;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -20,14 +20,13 @@ public class FileService {
 
     private Path createFilePath(long fileId, Path folder) {return folder.resolve("file-"+ fileId);}
 
-    public void saveFile(String folderName, long fileId, MultipartFile file) throws IOException{
+    public void saveFile(String folderName, long fileId, MultipartFile file, String fileName) throws IOException{
 
         Path folder = FILES_FOLDER.resolve(folderName);
 
         Files.createDirectories(folder);
-
-        Path newFile = createFilePath(fileId, folder);
-
+        String final_fileName = fileId + "_" + fileName; //
+        Path newFile = folder.resolve(final_fileName);
         file.transferTo(newFile);
     }
 

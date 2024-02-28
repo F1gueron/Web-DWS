@@ -1,0 +1,53 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>CyberSec Blog</title>
+</head>
+<body>
+<h1>New CTF</h1>
+<form action="/post/newpost" method="post" enctype="multipart/form-data">
+    <p>Organized by: </p>
+    <input type='text' name='organizer' value='{{#organizer}}{{.}}{{/organizer}}'/>
+    <p>CTF Name:</p>
+    <input type='text' name='name'/>
+    <p>Description:</p>
+    <textarea name='description' rows=5 cols=40></textarea>
+
+    <h3>Categories</h3>
+    <input type="checkbox" id="crypto" name="crypto" value="crypto">
+    <label for="crypto">Crypto</label><br>
+
+    <input type="checkbox" id="pwn" name="pwn" value="pwn">
+    <label for="pwn">Pwn</label><br>
+
+    <input type="checkbox" id="reversing" name="reversing" value="reversing">
+    <label for="reversing">Reversing</label><br>
+
+    <input type="checkbox" id="web" name="web" value="web">
+    <label for="web">Web</label><br>
+
+    <input type="checkbox" id="mobile" name="mobile" value="mobile">
+    <label for="mobile">Mobile</label><br>
+
+    <input type="checkbox" id="osint" name="osint" value="osint">
+    <label for="osint">OSINT</label><br>
+
+    <p>Image file:</p>
+    <input type='file' name='image' accept=".jpg, .jpeg"/>
+    <p>Needed files for the post.</p>
+
+    <input type="file" name="file" accept=".zip, .txt, .rar .7z, .pdf">
+    <p>Allowed formats:</p>
+    <ul>
+        <li>.zip</li>
+        <li>.txt</li>
+        <li>.rar</li>
+        <li>.7z</li>
+        <li>.pdf</li>
+    </ul>
+    <p>Date: </p>
+    <input type="date" name="date">
+    <input type='submit' value='Save'/>
+</form>
+</body>
+</html>

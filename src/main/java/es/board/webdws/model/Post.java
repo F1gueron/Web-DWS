@@ -1,4 +1,4 @@
-package com.example.webdws.model;
+package es.board.webdws.model;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,28 +10,29 @@ public class Post {
     private String author;
     private String title;
     private String text;
-    private boolean isImage = false; // Variable to check if there is an image in the post.
-    private boolean isFile = false; // IDEM
+    private String imageName = ""; // Name for embedded image
+    private String fileName = "";  // Name for embedded file
 
-    public boolean getIsFile() {
-        return isFile;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setIsFile(boolean file) {
-        this.isFile = file;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     private LocalDate date;
 
     public LocalDate getDate() {
         return date;
-    }
-
-    public Boolean getIsImage(){
-        return isImage;
-    }
-    public void setIsImage(boolean image) {
-        this.isImage = image;
     }
 
     public void setDate(LocalDate date) {

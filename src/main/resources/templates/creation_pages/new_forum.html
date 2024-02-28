@@ -4,7 +4,8 @@
     <title>CyberSec Blog</title>
 </head>
 <body>
-<form action="/post/new" method="post" enctype="multipart/form-data">
+<h1>New Forum</h1>
+<form action="/post/newpost" method="post" enctype="multipart/form-data">
     <p>Author: </p>
     <input type='text' name='author' value='{{#author}}{{.}}{{/author}}'/>
     <p>Title:</p>
@@ -16,7 +17,7 @@
     <p>Needed files for the post.</p>
 
     <input type="file" name="file" accept=".zip, .txt, .rar .7z, .pdf">
-    <p>Files should be the following formats:</p>
+    <p>Allowed formats:</p>
     <ul>
         <li>.zip</li>
         <li>.txt</li>
