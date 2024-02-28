@@ -17,7 +17,7 @@ li, a, button {
 
 header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     padding: 30px 10%;
 }
@@ -31,7 +31,7 @@ header {
 
 .logo {
     cursor: pointer;
-    width: 45%;
+    width: 10%;
 }
 
 .nav-links {

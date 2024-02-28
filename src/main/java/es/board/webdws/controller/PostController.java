@@ -84,6 +84,7 @@ public class PostController {
 
         return "creation_pages/new_post";
     }
+
     @GetMapping("/post/newwriteup")
     public String newWriteup(Model model) {
 
@@ -91,6 +92,7 @@ public class PostController {
 
         return "creation_pages/new_writeup";
     }
+
     @GetMapping("/post/newctf")
     public String newCTF(Model model) {
 
@@ -98,6 +100,7 @@ public class PostController {
 
         return "creation_pages/new_ctf";
     }
+
     @GetMapping("/post/newforum")
     public String newForum(Model model) {
 
@@ -111,7 +114,7 @@ public class PostController {
 
     /*
         This function creates a post with (if exists) an Image and (if exists) a File.
-        It checks if we passed a file or not to change the post parameter so it changes when resolving the image into the html (same with the file).
+        It checks if we passed a file or not to change the post parameter so, it changes when resolving the image into the html (same with the file).
 
         Function : newPost
         param : Model, post, image, file
@@ -121,7 +124,7 @@ public class PostController {
      */
 
     @GetMapping("/todo")
-    public String todo(){
+    public String todo() {
         return "todo";
     }
 
@@ -140,37 +143,30 @@ public class PostController {
     @PostMapping("/post/newpost")
     public String newPost(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
 
-        imageHandlerer(image,post);
-        fileHandlerer(file,post);
+        return uploadData(model, post, image, file);
 
-        authorSession.setAuthor(post.getAuthor());
-        authorSession.incNumPosts();
-
-        model.addAttribute("numPosts", authorSession.getNumPosts());
-
-        return "saved_posts";
     }
 
     @PostMapping("/post/newctf")
     public String newCTF(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
 
-        imageHandlerer(image,post);
-        fileHandlerer(file,post);
+        return uploadData(model, post, image, file);
 
-        authorSession.setAuthor(post.getAuthor());
-        authorSession.incNumPosts();
-
-        model.addAttribute("numPosts", authorSession.getNumPosts());
-
-        return "saved_posts";
     }
 
     @PostMapping("/post/newforum")
     public String newForum(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
 
-        imageHandlerer(image,post);
-        fileHandlerer(file,post);
+        return uploadData(model, post, image, file);
+    }
 
+    private String uploadData(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
+        if (!image.isEmpty()){
+            uploadHandler(image, post);
+        }
+        if (!file.isEmpty()) {
+            uploadHandler(file, post);
+        }
         authorSession.setAuthor(post.getAuthor());
         authorSession.incNumPosts();
 
@@ -182,16 +178,9 @@ public class PostController {
     @PostMapping("/post/newwriteup")
     public String newWriteup(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
 
-        imageHandlerer(image,post);
-        fileHandlerer(file,post);
-
-        authorSession.setAuthor(post.getAuthor());
-        authorSession.incNumPosts();
-
-        model.addAttribute("numPosts", authorSession.getNumPosts());
-
-        return "saved_posts";
+        return uploadData(model, post, image, file);
     }
+
     // TODO DOWNLOAD FILE AND IMG
     @GetMapping("/post/{id}/file")
     public String downloadFile(@PathVariable int id) throws MalformedURLException {
@@ -213,13 +202,30 @@ public class PostController {
 
         postService.deleteById(id);
 
-       // imageService.deleteImage(POSTS_FOLDER, id);
+        // imageService.deleteImage(POSTS_FOLDER, id);
 
         return "deleted_post";
     }
 
     // Methods to handle images and files, probably remove image later, as it's a type of file
 
+
+    private void uploadHandler(MultipartFile file, Post post) throws IOException {
+        postService.save(post);
+        String old_fileName = file.getOriginalFilename();
+        String content_type = file.getContentType();
+        String new_fileName = UUID.randomUUID().toString();
+        String fileExtension = old_fileName.substring(old_fileName.lastIndexOf("."));
+        if (content_type.startsWith("image/")) {
+            imageService.saveImage(POSTS_FOLDER, post.getId(), file, new_fileName + fileExtension);
+        } else {
+            fileService.saveFile(POSTS_FOLDER, post.getId(), file, new_fileName + fileExtension);
+        }
+        post.setFileName(new_fileName);
+    }
+
+
+/*
     private void fileHandlerer(MultipartFile file, Post post) throws IOException {
 
         postService.save(post);
@@ -249,4 +255,6 @@ public class PostController {
             post.setImageName(new_imageName);
         }
     }
+
+ */
 }
