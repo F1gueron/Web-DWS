@@ -1,4 +1,4 @@
-package com.example.webdws.model;
+package es.board.webdws.model;
 
 import org.springframework.web.multipart.MultipartFile;
 

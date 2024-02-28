@@ -1,4 +1,4 @@
-package com.example.webdws.controller;
+package es.board.webdws.controller;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;

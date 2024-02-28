@@ -1,4 +1,4 @@
-package com.example.webdws;
+package es.board.webdws;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

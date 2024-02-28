@@ -1,4 +1,4 @@
-package com.example.webdws.service;
+package es.board.webdws.service;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

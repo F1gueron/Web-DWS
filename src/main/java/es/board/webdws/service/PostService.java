@@ -1,4 +1,4 @@
-package com.example.webdws.service;
+package es.board.webdws.service;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
 
-import com.example.webdws.model.Post;
+import es.board.webdws.model.Post;
 
 @Service
 public class PostService {

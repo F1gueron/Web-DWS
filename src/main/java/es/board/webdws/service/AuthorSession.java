@@ -1,4 +1,4 @@
-package com.example.webdws.service;
+package es.board.webdws.service;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
