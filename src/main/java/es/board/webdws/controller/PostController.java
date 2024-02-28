@@ -163,12 +163,7 @@ public class PostController {
     }*/
 
     private String uploadData(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
-        if (!image.isEmpty()){
-            uploadHandler(image, post);
-        }
-        if (!file.isEmpty()) {
-            uploadHandler(file, post);
-        }
+        uploadHandler(file, image, post);
         authorSession.setAuthor(post.getAuthor());
         authorSession.incNumPosts();
 
@@ -208,19 +203,39 @@ public class PostController {
 
     // Methods to handle images and files, probably remove image later, as it's a type of file
 
-
-    private void uploadHandler(MultipartFile file, Post post) throws IOException {
-        postService.save(post);
-        String old_fileName = file.getOriginalFilename();
-        String content_type = file.getContentType();
+    private String file_to_UUID (MultipartFile file){
         String new_fileName = UUID.randomUUID().toString();
-        String fileExtension = old_fileName.substring(old_fileName.lastIndexOf("."));
-        if (content_type.startsWith("image/")) {
-            imageService.saveImage(POSTS_FOLDER, post.getId(), file, new_fileName + fileExtension);
-        } else {
-            fileService.saveFile(POSTS_FOLDER, post.getId(), file, new_fileName + fileExtension);
+        String old_fileName = file.getOriginalFilename();
+        String fileExtension = get_file_extension(old_fileName); // handleFile checks if it is empty so this is never null.
+
+        return new_fileName + fileExtension;
+    }
+
+
+    private String get_file_extension(String filename){
+        return filename.substring(filename.lastIndexOf("."));
+    }
+
+
+    private String handleFile(MultipartFile file){
+        String new_filename = null;
+        if (!file.isEmpty()){
+            new_filename = file_to_UUID(file);
         }
-        post.setFileName(new_fileName);
+
+        return new_filename;
+    }
+
+    private void uploadHandler(MultipartFile file, MultipartFile image, Post post) throws IOException {
+        postService.save(post);
+        String content_type = image.getContentType();
+        String final_file = handleFile(file);
+        String final_image = handleFile(image);
+
+        fileService.saveFile(POSTS_FOLDER, post.getId(), file, final_file);
+        imageService.saveImage(POSTS_FOLDER, post.getId(), image, final_image);
+
+        post.setFileName(final_file);
     }
 
 }
