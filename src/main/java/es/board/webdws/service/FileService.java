@@ -18,7 +18,9 @@ public class FileService {
 
     private static final Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files");
 
-    private Path createFilePath(long fileId, Path folder) {return folder.resolve("file-"+ fileId);}
+    private Path createFilePath(Path folder, String fileName) {
+        return folder.resolve(fileName);
+    }
 
     public void saveFile(String folderName, long fileId, MultipartFile file, String fileName) throws IOException{
 
@@ -30,27 +32,31 @@ public class FileService {
         file.transferTo(newFile);
     }
 
-    public void deleteFile(String folderName, long fileId) throws IOException {
+    // not used, should we delete it?
+    public void deleteFile(String folderName, String fileName) throws IOException {
 
         Path folder = FILES_FOLDER.resolve(folderName);
 
-        Path fileFile = createFilePath(fileId, folder);
+        Path fileFile = createFilePath(folder, fileName);
 
         Files.deleteIfExists(fileFile);
     }
 
-    public ResponseEntity<Object> createResponseFromFile(String folderName, long fileId) throws MalformedURLException {
+    public ResponseEntity<Object> createResponseFromFile(String folderName, String fileName, boolean download) throws MalformedURLException {
 
         Path folder = FILES_FOLDER.resolve(folderName);
 
-        Path filePath = createFilePath(fileId, folder);
+        Path filePath = createFilePath(folder, fileName);
 
         Resource file = new UrlResource(filePath.toUri());
-
         if(!Files.exists(filePath)) {
             return ResponseEntity.notFound().build();
         } else {
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "file").body(file);
+            if(download){
+                return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+            }else{
+                return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(file);
+            }
         }
     }
 }
