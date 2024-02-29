@@ -46,8 +46,8 @@ header p {
     backdrop-filter: blur(35px); /* Adjust the blur value as needed */
     flex: 1 1 30%;
     box-sizing: border-box;
-    border-radius: 5px;
-    padding: 10px 10px;
+    border-radius: 10px;
+    padding: 20px 10px;
     margin: 5px;
     text-decoration: none;
     color: white;
@@ -55,7 +55,7 @@ header p {
 }
 
 .category:hover {
-    color: #0088a9;
+    color: darkgray;
     transition: all 0.3s ease 0s;
 }
 
