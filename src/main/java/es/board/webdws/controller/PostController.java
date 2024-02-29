@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.board.webdws.model.Post;
@@ -77,13 +78,7 @@ public class PostController {
         getmapping to show the new_post that we have used until today
 
      */
-    @GetMapping("/post/newpost")
-    public String newPostForm(Model model) {
 
-        model.addAttribute("author", authorSession.getAuthor());
-
-        return "creation_pages/new_post";
-    }
 
     @GetMapping("/post/newwriteup")
     public String newWriteup(Model model) {
@@ -93,13 +88,7 @@ public class PostController {
         return "creation_pages/new_writeup";
     }
 
-    @GetMapping("/post/newctf")
-    public String newCTF(Model model) {
 
-        model.addAttribute("author", authorSession.getAuthor());
-
-        return "creation_pages/new_ctf";
-    }
 
     @GetMapping("/post/newforum")
     public String newForum(Model model) {
@@ -147,15 +136,11 @@ public class PostController {
 
     }
 
-    @PostMapping("/post/newctf")
-    public String newCTF(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
-
-        return uploadData(model, post, image, file);
-
-    }
 
     @PostMapping("/post/newforum")
     public String newForum(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
+
+
 
         return uploadData(model, post, image, file);
     }
@@ -171,25 +156,25 @@ public class PostController {
         authorSession.incNumPosts();
 
         model.addAttribute("numPosts", authorSession.getNumPosts());
+        if (post.getCategory() != null){
+            model.addAttribute("storageLocation", post.getCategory());
+        }
 
         return "saved_posts";
     }
 
     @PostMapping("/post/newwriteup")
-    public String newWriteup(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
-
+    public String newWriteup(@RequestParam("Category") String category, Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
+        post.setCategory(category);
         return uploadData(model, post, image, file);
     }
 
     // TODO DOWNLOAD FILE AND IMG
     @GetMapping("/post/{id}/file")
-    public String downloadFile(@PathVariable int id) throws MalformedURLException {
-
-        // public ResponseEntity<Object> downloadFile(@PathVariable int id) throws MalformedURLException
-        //return fileService.createResponseFromFile(POSTS_FOLDER, id);
-        return "todo";
+    public ResponseEntity<Object> downloadFile(@PathVariable int id, @RequestParam(required = false) boolean download) throws MalformedURLException {
+        String a = "a";
+        return fileService.createResponseFromFile(POSTS_FOLDER, a, download);
     }
-
 
     @GetMapping("/post/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable String id) throws MalformedURLException {
@@ -224,37 +209,4 @@ public class PostController {
         post.setFileName(new_fileName);
     }
 
-
-/*
-    private void fileHandlerer(MultipartFile file, Post post) throws IOException {
-
-        postService.save(post);
-
-        String old_fileName = file.getOriginalFilename();
-
-        if ( !old_fileName.isEmpty() ){
-
-            String new_fileName = UUID.randomUUID().toString();
-            String fileExtension = old_fileName.substring(old_fileName.lastIndexOf("."));
-            fileService.saveFile(POSTS_FOLDER, post.getId(), file, new_fileName + fileExtension);
-            post.setFileName(new_fileName);
-        }
-    }
-
-
-    private void imageHandlerer(MultipartFile image, Post post) throws IOException{
-        postService.save(post);
-        String old_imageName = image.getOriginalFilename();
-
-        if ( !old_imageName.isEmpty() ){
-
-            String new_imageName = UUID.randomUUID().toString();
-            String fileExtension = old_imageName.substring(old_imageName.lastIndexOf("."));
-            imageService.saveImage(POSTS_FOLDER, post.getId(), image, new_imageName + fileExtension);
-
-            post.setImageName(new_imageName);
-        }
-    }
-
- */
 }

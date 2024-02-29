@@ -2,7 +2,10 @@ package es.board.webdws.model;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.stream.events.Comment;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Post {
 
@@ -12,6 +15,26 @@ public class Post {
     private String text;
     private String imageName = ""; // Name for embedded image
     private String fileName = "";  // Name for embedded file
+
+    private String category = null;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    private List<Comment> comments;
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public String getImageName() {
         return imageName;
