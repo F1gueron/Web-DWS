@@ -78,13 +78,7 @@ public class PostController {
         getmapping to show the new_post that we have used until today
 
      */
-    @GetMapping("/post/newpost")
-    public String newPostForm(Model model) {
 
-        model.addAttribute("author", authorSession.getAuthor());
-
-        return "creation_pages/new_post";
-    }
 
     @GetMapping("/post/newwriteup")
     public String newWriteup(Model model) {
@@ -94,13 +88,7 @@ public class PostController {
         return "creation_pages/new_writeup";
     }
 
-    @GetMapping("/post/newctf")
-    public String newCTF(Model model) {
 
-        model.addAttribute("author", authorSession.getAuthor());
-
-        return "creation_pages/new_ctf";
-    }
 
     @GetMapping("/post/newforum")
     public String newForum(Model model) {
@@ -148,19 +136,14 @@ public class PostController {
 
     }
 
-    @PostMapping("/post/newctf")
-    public String newCTF(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
 
-        return uploadData(model, post, image, file);
-
-    }
-
-    /*
     @PostMapping("/post/newforum")
     public String newForum(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
 
+
+
         return uploadData(model, post, image, file);
-    }*/
+    }
 
     private String uploadData(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
         if (!image.isEmpty()){
@@ -173,13 +156,16 @@ public class PostController {
         authorSession.incNumPosts();
 
         model.addAttribute("numPosts", authorSession.getNumPosts());
+        if (post.getCategory() != null){
+            model.addAttribute("storageLocation", post.getCategory());
+        }
 
         return "saved_posts";
     }
 
     @PostMapping("/post/newwriteup")
-    public String newWriteup(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
-
+    public String newWriteup(@RequestParam("Category") String category, Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
+        post.setCategory(category);
         return uploadData(model, post, image, file);
     }
 

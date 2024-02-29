@@ -10,10 +10,6 @@
 <form id="myForm">
     <input type="radio" name="element" value="writeup">
     <label >Writeup</label><br>
-    <input type="radio" name="element" value="post" >
-    <label >Post</label><br>
-    <input type="radio" name="element" value="ctf">
-    <label >CTF</label><br>
     <input type="radio" name="element" value="discussion-forum">
     <label >Discussion forum</label><br>
 </form>
@@ -34,12 +30,6 @@
         switch (selectedOption) {
             case 'writeup':
                 window.location.href = '/post/newwriteup';
-                break;
-            case 'post':
-                window.location.href = '/post/newpost';
-                break;
-            case 'ctf':
-                window.location.href = '/post/newctf';
                 break;
             case 'discussion-forum':
                 window.location.href = '/post/newforum';

@@ -16,6 +16,16 @@ public class Post {
     private String imageName = ""; // Name for embedded image
     private String fileName = "";  // Name for embedded file
 
+    private String category = null;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     private List<Comment> comments;
 
     public List<Comment> getComments() {
