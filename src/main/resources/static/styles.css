@@ -1,67 +1,70 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-* {
-    box-sizing: border-box;
+
+body {
+    font-family: "Montserrat", sans-serif;
+    color: #ffffff;
     margin: 0;
     padding: 0;
-    background-color: #111111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('images/keyboard_bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-li, a, button {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 500;
-    font-size: 25px;
-    color: #edf0f1;
+.forum {
+    filter: invert(100%);
+}
+
+.container {
+    text-align: center;
+}
+
+header h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+header p {
+    margin: 10px 0;
+}
+
+.category-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.category {
+    /*background-color: rgba(255, 255, 255, 0.1); */
+    /*background-color: rgba(255, 255, 255, 0.4); /* Fallback color */
+    backdrop-filter: blur(35px); /* Adjust the blur value as needed */
+    flex: 1 1 30%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 10px 10px;
+    margin: 5px;
     text-decoration: none;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px 10%;
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    margin-right: auto ;
-}
-
-.logo {
-    cursor: pointer;
-    width: 10%;
-}
-
-.nav-links {
-    list-style: none;
-}
-
-.nav-links li {
+    color: white;
     display: inline-block;
-    padding: 0px 20px;
 }
 
-.nav-links li a {
+.category:hover {
+    color: #0088a9;
     transition: all 0.3s ease 0s;
 }
 
-.nav-links li a:hover {
-    color: #0088a9
+footer {
+    margin-top: 50px;
 }
 
-button {
-    padding: 9px 25px; 
-    background-color: rgba(0,86,13, 1);
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
+.home {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5em;
 }
-
-button:hover{
-    background-color: rgba(0,86,13, 0.8);
-
-}
-
