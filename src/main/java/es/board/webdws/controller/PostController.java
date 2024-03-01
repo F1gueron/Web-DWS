@@ -133,12 +133,12 @@ public class PostController {
 
     }
 
-    /*
+
     @PostMapping("/post/newforum")
     public String newForum(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
 
         return uploadData(model, post, image, file);
-    }*/
+    }
 
     private String uploadData(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
         uploadHandler(file, image, post);
