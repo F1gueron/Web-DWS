@@ -56,6 +56,12 @@ public class PostController {
         return "../static/index";
     }
 
+
+    @GetMapping("/login")
+    public String loginPage(){
+        return "../static/login";
+    }
+
     @GetMapping("/writeups")
     public String showWriteups() {
 
