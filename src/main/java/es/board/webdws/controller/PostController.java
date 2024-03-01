@@ -53,7 +53,7 @@ public class PostController {
     @GetMapping("/")
     public String landingPage() {
 
-        return "index";
+        return "../static/index";
     }
 
     @GetMapping("/writeups")

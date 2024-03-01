@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import es.board.webdws.model.Post;
 
+
 @Service
 public class PostService {
 
