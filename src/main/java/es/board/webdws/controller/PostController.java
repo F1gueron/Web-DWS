@@ -144,6 +144,16 @@ public class PostController {
 
         return uploadData(model, post, image, file);
     }
+    /*
+        This function receives everything we need to create a post, checks if file and/or image exist(s) and sends it to uploadHandler.
+        Sets the author if exists, and increases the number of posts created to send it to saved_post template.
+
+        function : uploadData
+        param: model, post, image, file
+        returns: saved_posts.html page ("POST ADDED!")
+
+
+     */
 
     private String uploadData(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
         if (!image.isEmpty()){
@@ -194,6 +204,14 @@ public class PostController {
 
     // Methods to handle images and files, probably remove image later, as it's a type of file
 
+
+    /*
+        This function saves the post, and creates a random UUID filename for the file it receives, checks if it is an image or a file and saves it using the appropiate class.
+        function : uploadHandler
+        param : file, post
+        returns : void
+
+     */
 
     private void uploadHandler(MultipartFile file, Post post) throws IOException {
         postService.save(post);
