@@ -56,11 +56,6 @@ public class PostController {
         return "../static/index";
     }
 
-    @GetMapping("/writeups")
-    public String showWriteups() {
-
-        return "../static/writeups";
-    }
 
 
     /*
@@ -86,21 +81,6 @@ public class PostController {
         return "creation_pages/new_post";
     }
 
-    @GetMapping("/post/newwriteup")
-    public String newWriteup(Model model) {
-
-        model.addAttribute("author", authorSession.getAuthor());
-
-        return "creation_pages/new_writeup";
-    }
-
-    @GetMapping("/post/newctf")
-    public String newCTF(Model model) {
-
-        model.addAttribute("author", authorSession.getAuthor());
-
-        return "creation_pages/new_ctf";
-    }
 
     @GetMapping("/post/newforum")
     public String newForum(Model model) {
@@ -110,8 +90,6 @@ public class PostController {
         return "creation_pages/new_forum";
     }
 
-
-    // One getmapping for each creator
 
     /*
         This function creates a post with (if exists) an Image and (if exists) a File.
@@ -172,11 +150,6 @@ public class PostController {
         return "saved_posts";
     }
 
-    @PostMapping("/post/newwriteup")
-    public String newWriteup(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
-
-        return uploadData(model, post, image, file);
-    }
 
     // TODO DOWNLOAD FILE AND IMG
     @GetMapping("/post/{id}/file")
@@ -228,7 +201,6 @@ public class PostController {
 
     private void uploadHandler(MultipartFile file, MultipartFile image, Post post) throws IOException {
         postService.save(post);
-        String content_type = image.getContentType();
         String final_file = handleFile(file);
         String final_image = handleFile(image);
 
