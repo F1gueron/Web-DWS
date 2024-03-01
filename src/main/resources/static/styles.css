@@ -14,15 +14,13 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    font-weight: lighter;
 }
 
-.forum {
-    filter: invert(100%);
-}
-
-.container {
+.landing-page-container {
     text-align: center;
 }
+
 
 header h1 {
     font-size: 3em;
@@ -40,27 +38,37 @@ header p {
     margin-top: 20px;
 }
 
-.category {
+.landing-category {
     /*background-color: rgba(255, 255, 255, 0.1); */
     /*background-color: rgba(255, 255, 255, 0.4); /* Fallback color */
     backdrop-filter: blur(35px); /* Adjust the blur value as needed */
     flex: 1 1 30%;
     box-sizing: border-box;
     border-radius: 10px;
-    padding: 20px 10px;
+    padding: 15px 10px;
     margin: 5px;
     text-decoration: none;
     color: white;
     display: inline-block;
+    transition: all 0.3s ease 0s;
+
 }
 
-.category:hover {
+.landing-category:hover {
     color: darkgray;
+    transform: translateY(-0.75rem);
     transition: all 0.3s ease 0s;
 }
 
-footer {
-    margin-top: 50px;
+footer a{
+    color: white;
+    transition: all 0.3s ease 0s;
+    padding: 0 30px;
+}
+
+footer a:hover {
+    color: darkgray;
+    transition: all 0.3s ease 0s;
 }
 
 .home {
