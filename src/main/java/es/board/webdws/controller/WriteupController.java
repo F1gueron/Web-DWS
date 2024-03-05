@@ -10,6 +10,7 @@ import es.board.webdws.service.ImageService;
 import es.board.webdws.service.WriteupService;
 
 
+import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -81,10 +82,11 @@ public class WriteupController {
     }
 
     //Show writeups
-    @GetMapping("/writeup/{category}/id")
-    public String showWriteups(@PathVariable String category, Model model){
-        model.addAttribute("Category", category);
-
+    @GetMapping("/writeup")
+    public String showWriteups(@RequestParam String category, Model model) {
+       if(category.equals("pwn")){
+           model.addAttribute("pwn", category);
+       }
         return "writeup";
     }
 
