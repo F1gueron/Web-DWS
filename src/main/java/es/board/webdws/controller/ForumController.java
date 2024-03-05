@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.UUID;
 
+import es.board.webdws.model.Forum;
 import es.board.webdws.service.AuthorSession;
 import es.board.webdws.service.FileService;
 import es.board.webdws.service.ImageService;
-import es.board.webdws.service.PostService;
+import es.board.webdws.service.ForumService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import es.board.webdws.model.Post;
-
 
 @Controller
-public class PostController {
+public class ForumController {
 
     private static final String POSTS_FOLDER = "posts";
 
     @Autowired
-    private PostService postService;
+    private ForumService forumService;
 
     @Autowired
     private AuthorSession authorSession;
@@ -41,13 +40,13 @@ public class PostController {
     private FileService fileService;
 
 
-    @GetMapping("/posts")
+    @GetMapping("/forum")
     public String showPosts(Model model, HttpSession session) {
 
-        model.addAttribute("posts", postService.findAll());
+        model.addAttribute("posts", forumService.findAll());
         model.addAttribute("welcome", session.isNew());
 
-        return "posts";
+        return "forum";
     }
 
     @GetMapping("/")
@@ -63,7 +62,7 @@ public class PostController {
 
      */
 
-    @GetMapping("/post/new")
+    @GetMapping("/new")
     public String choosePost() {
 
         return "create_new";
@@ -73,16 +72,9 @@ public class PostController {
         getmapping to show the new_post that we have used until today
 
      */
-    @GetMapping("/post/newpost")
-    public String newPostForm(Model model) {
 
-        model.addAttribute("author", authorSession.getAuthor());
-
-        return "creation_pages/new_post";
-    }
-
-
-    @GetMapping("/post/newforum")
+    //Create forum
+    @GetMapping("/forum/newforum")
     public String newForum(Model model) {
 
         model.addAttribute("author", authorSession.getAuthor());
@@ -90,6 +82,11 @@ public class PostController {
         return "creation_pages/new_forum";
     }
 
+    @PostMapping("/forum/newforum")
+    public String newForum(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {
+
+        return uploadData(model, forum, image, file);
+    }
 
     /*
         This function creates a post with (if exists) an Image and (if exists) a File.
@@ -111,67 +108,49 @@ public class PostController {
     @GetMapping("/post/{id}")
     public String showPost(Model model, @PathVariable long id) {
 
-        Post post = postService.findById(id);
-        model.addAttribute("image", !post.getImageName().isEmpty());
-        model.addAttribute("file", !post.getFileName().isEmpty());
-        model.addAttribute("post", post);
+        Forum forum = forumService.findById(id);
+        model.addAttribute("image", !forum.getImageName().isEmpty());
+        model.addAttribute("file", !forum.getFileName().isEmpty());
+        model.addAttribute("forum", forum);
 
-        return "show_post";
-    }
-
-    @PostMapping("/post/newpost")
-    public String newPost(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
-
-        return uploadData(model, post, image, file);
-
-    }
-
-    @PostMapping("/post/newctf")
-    public String newCTF(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
-
-        return uploadData(model, post, image, file);
-
+        return "show_forum";
     }
 
 
-    @PostMapping("/post/newforum")
-    public String newForum(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
+    private String uploadData(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {
+        uploadHandler(file, image, forum);
+        authorSession.setAuthor(forum.getAuthor());
+        authorSession.incNumForums();
+        String title = forum.getTitle();
 
-        return uploadData(model, post, image, file);
+        model.addAttribute("numForum", authorSession.getNumForums());
+        model.addAttribute("title",title);
+
+        return "saved_forum";
     }
 
-    private String uploadData(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
-        uploadHandler(file, image, post);
-        authorSession.setAuthor(post.getAuthor());
-        authorSession.incNumPosts();
-
-        model.addAttribute("numPosts", authorSession.getNumPosts());
-
-        return "saved_posts";
+    //Download File to user
+    @GetMapping("/forum/{id}/file")
+    public ResponseEntity<Object> downloadFile(Forum forum, @RequestParam(required = false) boolean download) throws MalformedURLException {
+        String name = forum.getFileName();
+        return fileService.createResponseFromFile(POSTS_FOLDER, name, download);
     }
 
+    @GetMapping("/forum/{id}/image")
+    public ResponseEntity<Object> downloadImage(Forum forum) throws MalformedURLException {
 
-    // TODO DOWNLOAD FILE AND IMG
-    @GetMapping("/post/{id}/file")
-    public ResponseEntity<Object> downloadFile(@PathVariable int id, @RequestParam(required = false) boolean download) throws MalformedURLException {
-        String a = "a";
-        return fileService.createResponseFromFile(POSTS_FOLDER, a, download);
+        return imageService.createResponseFromImage(POSTS_FOLDER, forum.getFileName());
     }
 
-    @GetMapping("/post/{id}/image")
-    public ResponseEntity<Object> downloadImage(@PathVariable String id, Post post ) throws MalformedURLException {
+    @GetMapping("/forum/{id}/delete")
+    public String deleteForum(Forum forum, @PathVariable long id) throws IOException {
 
-        return imageService.createResponseFromImage(POSTS_FOLDER, post.getFileName());
-    }
+        forumService.deleteById(id);
 
-    @GetMapping("/post/{id}/delete")
-    public String deletePost(Model model, @PathVariable long id) throws IOException {
+        imageService.deleteImage(POSTS_FOLDER, forum.getImageName());
+        fileService.deleteFile(POSTS_FOLDER, forum.getFileName());
 
-        postService.deleteById(id);
-
-        // imageService.deleteImage(POSTS_FOLDER, id);
-
-        return "deleted_post";
+        return "deleted_forum";
     }
 
     // Methods to handle images and files, probably remove image later, as it's a type of file
@@ -199,15 +178,15 @@ public class PostController {
         return new_filename;
     }
 
-    private void uploadHandler(MultipartFile file, MultipartFile image, Post post) throws IOException {
-        postService.save(post);
+    private void uploadHandler(MultipartFile file, MultipartFile image, Forum forum) throws IOException {
+        forumService.save(forum);
         String final_file = handleFile(file);
         String final_image = handleFile(image);
 
-        fileService.saveFile(POSTS_FOLDER, post.getId(), file, final_file);
-        imageService.saveImage(POSTS_FOLDER, post.getId(), image, final_image);
+        fileService.saveFile(POSTS_FOLDER, forum.getId(), file, final_file);
+        imageService.saveImage(POSTS_FOLDER, forum.getId(), image, final_image);
 
-        post.setFileName(final_file);
+        forum.setFileName(final_file);
     }
 
 }

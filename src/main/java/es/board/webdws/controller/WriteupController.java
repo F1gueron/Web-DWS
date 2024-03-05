@@ -8,7 +8,6 @@ import es.board.webdws.service.AuthorSession;
 import es.board.webdws.service.FileService;
 import es.board.webdws.service.ImageService;
 import es.board.webdws.service.WriteupService;
-import jakarta.servlet.http.HttpSession;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +47,7 @@ public class WriteupController {
 
         return "creation_pages/new_writeup";
     }
+
     @PostMapping("/writeup/newwriteup")
     public String newWriteup(@RequestParam("Category") String category, Model model, Writeup writeup, MultipartFile image, MultipartFile file) throws IOException {
 
@@ -64,7 +64,20 @@ public class WriteupController {
 
         // imageService.deleteImage(POSTS_FOLDER, id);
 
-        return "deleted_post";
+        return "deleted_forum";
+    }
+
+    //Download File to user
+    @GetMapping("/writeup/{id}/file")
+    public ResponseEntity<Object> downloadFile(Writeup writeup,@PathVariable int id, @RequestParam(required = false) boolean download) throws MalformedURLException {
+        String name = writeup.getFileName();
+        return fileService.createResponseFromFile(POSTS_FOLDER, name, download);
+    }
+
+    @GetMapping("/writeup/{id}/image")
+    public ResponseEntity<Object> downloadImage(@PathVariable String id, Writeup writeup) throws MalformedURLException {
+
+        return imageService.createResponseFromImage(POSTS_FOLDER, writeup.getFileName());
     }
 
     //Save files
@@ -79,9 +92,9 @@ public class WriteupController {
     private String uploadData(Model model, Writeup writeup, MultipartFile image, MultipartFile file) throws IOException {
         uploadHandler(file, image, writeup);
         authorSession.setAuthor(writeup.getAuthor());
-        authorSession.incNumPosts();
+        authorSession.incNumWriteups();
 
-        model.addAttribute("numPosts", authorSession.getNumPosts());
+        model.addAttribute("numWriteup", authorSession.getNumWriteups());
 
         return "saved_writeup";
     }

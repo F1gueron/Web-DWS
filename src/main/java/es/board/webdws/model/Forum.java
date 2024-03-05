@@ -1,13 +1,10 @@
 package es.board.webdws.model;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.xml.stream.events.Comment;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Post {
+public class Forum {
 
     private Long id;
     private String author;
@@ -62,9 +59,9 @@ public class Post {
         this.date = date;
     }
 
-    public Post(){}
+    public Forum(){}
 
-    public Post(String author, String title, String text, LocalDate date) {
+    public Forum(String author, String title, String text, LocalDate date) {
         super();
         this.author = author;
         this.title = title;
@@ -72,7 +69,7 @@ public class Post {
         this.date = date;
     }
 
-    public Post(String author, String title, String text) {
+    public Forum(String author, String title, String text) {
         super();
         this.author = author;
         this.title = title;
