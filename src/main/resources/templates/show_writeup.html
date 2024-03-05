@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<p>Author: {{forum.author}}</p>
+<p>Title: {{forum.title}}</p>
+
+{{#forum.date}}
+    <p>Date: {{forum.date}}</p>
+{{/forum.date}}
+
+{{^forum.date}}
+    <p>This forum has no date assigned.</p>
+{{/forum.date}}
+
+<p>Text: {{forum.text}}</p>
+
+{{#image}}
+    <img src="/forum/{{forum.id}}/image"> <!-- Use for background, etc -->
+{{/image}}
+
+{{^image}}
+    <p>No images found for this forum.</p>
+{{/image}}
+
+{{#file}}
+    <div class="inline-container">
+        <p>Download link:</p>
+        <a href="/forum/{{forum.id}}/file?download=true">Download file</a>
+    </div>
+{{/file}}
+
+{{^file}}
+    <p>No files attached to this forum.</p>
+{{/file}}
+<hr>
+<a href="/forum/{{forum.id}}/delete">Delete forum</a>
+<br>
+<br>
+
+<a href="/static">Back</a>
+</body>
+</html>

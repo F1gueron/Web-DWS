@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class ForumController {
 
-    private static final String POSTS_FOLDER = "posts";
+    private static final String POSTS_FOLDER = "forum";
 
     @Autowired
     private ForumService forumService;
@@ -41,9 +41,9 @@ public class ForumController {
 
 
     @GetMapping("/forum")
-    public String showPosts(Model model, HttpSession session) {
+    public String showForums(Model model, HttpSession session) {
 
-        model.addAttribute("posts", forumService.findAll());
+        model.addAttribute("forums", forumService.findAll());
         model.addAttribute("welcome", session.isNew());
 
         return "forum";
@@ -74,7 +74,7 @@ public class ForumController {
      */
 
     //Create forum
-    @GetMapping("/forum/newforum")
+    @GetMapping("/forum/new")
     public String newForum(Model model) {
 
         model.addAttribute("author", authorSession.getAuthor());
@@ -82,7 +82,7 @@ public class ForumController {
         return "creation_pages/new_forum";
     }
 
-    @PostMapping("/forum/newforum")
+    @PostMapping("/forum/new")
     public String newForum(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {
 
         return uploadData(model, forum, image, file);
@@ -105,7 +105,7 @@ public class ForumController {
     }
 
 
-    @GetMapping("/post/{id}")
+    @GetMapping("/forum/{id}")
     public String showPost(Model model, @PathVariable long id) {
 
         Forum forum = forumService.findById(id);
@@ -115,6 +115,13 @@ public class ForumController {
 
         return "show_forum";
     }
+
+    //Redirect to log in
+    @GetMapping("/login")
+    public String login(){
+        return "../static/login";
+    }
+
 
 
     private String uploadData(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {

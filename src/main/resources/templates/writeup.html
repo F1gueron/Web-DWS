@@ -12,7 +12,7 @@
     <div class="logo-container"><img class="logo" src="/static/images/logo4.jpg" alt="logo"><span>CyberSecLabs</span></div>
     <nav>
         <ul class="nav-links">
-            <li><a href="/">Writeups</a></li>
+            <li><a href="/forum">Forums</a></li>
             <!--<li><a href="/posts">Forum</a></li>
             <li><a href="/todo">Events</a></li>-->
         </ul>
@@ -21,15 +21,20 @@
 </header>
 <hr>
 
-<h1>Forums</h1>
+<h1>Writeups</h1>
 
-{{#forums}}
+{{#category}}
+<p>You are at {{category}}</p>
+{{/category}}
+
+<!--
+{{#writeup}}
 <a href="forum/{{id}}">{{author}} {{title}}</a><br>
 {{/forums}}
 
 {{^forums}}
 <p>No posts yet.</p>
-{{/forums}}
+{{/forums}}-->
 
 <br>
 <a href="forum/new">New Forum</a>

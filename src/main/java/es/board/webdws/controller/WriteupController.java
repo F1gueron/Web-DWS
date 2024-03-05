@@ -25,7 +25,7 @@ import es.board.webdws.model.Writeup;
 @Controller
 public class WriteupController {
 
-    private static final String POSTS_FOLDER = "posts";
+    private static final String POSTS_FOLDER = "writeup";
 
     @Autowired
     private WriteupService writeupService;
@@ -40,7 +40,7 @@ public class WriteupController {
     private FileService fileService;
 
     // Create Writeup
-    @GetMapping("/writeup/newwriteup")
+    @GetMapping("/writeup/new")
     public String newWriteup(Model model) {
 
         model.addAttribute("author", authorSession.getAuthor());
@@ -48,7 +48,7 @@ public class WriteupController {
         return "creation_pages/new_writeup";
     }
 
-    @PostMapping("/writeup/newwriteup")
+    @PostMapping("/writeup/new")
     public String newWriteup(@RequestParam("Category") String category, Model model, Writeup writeup, MultipartFile image, MultipartFile file) throws IOException {
 
         writeup.setCategory(category);
@@ -78,6 +78,14 @@ public class WriteupController {
     public ResponseEntity<Object> downloadImage(@PathVariable String id, Writeup writeup) throws MalformedURLException {
 
         return imageService.createResponseFromImage(POSTS_FOLDER, writeup.getFileName());
+    }
+
+    //Show writeups
+    @GetMapping("/writeup/{category}/id")
+    public String showWriteups(@PathVariable String category, Model model){
+        model.addAttribute("Category", category);
+
+        return "writeup";
     }
 
     //Save files
