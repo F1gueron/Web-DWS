@@ -1,4 +1,4 @@
-import es.board.webdws.model.Post;
+import es.board.webdws.model.Forum;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +23,8 @@ public String newCTF(Model model) {
 }
 
 @PostMapping("/post/newctf")
-public String newCTF(Model model, Post post, MultipartFile image, MultipartFile file) throws IOException {
+public String newCTF(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {
 
-    return uploadData(model, post, image, file);
+    return uploadData(model, forum, image, file);
 
 }

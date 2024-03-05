@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>New Forum</h1>
-<form action="/post/newpost" method="post" enctype="multipart/form-data">
+<form action="/forum/newforum" method="post" enctype="multipart/form-data">
     <p>Author: </p>
     <input type='text' name='author' value='{{#author}}{{.}}{{/author}}'/>
     <p>Title:</p>
@@ -14,7 +14,7 @@
     <textarea name='text' rows=5 cols=40></textarea>
     <p>Image file:</p>
     <input type='file' name='image' accept=".jpg, .jpeg"/>
-    <p>Needed files for the post.</p>
+    <p>Needed files for the forum.</p>
 
     <input type="file" name="file" accept=".zip, .txt, .rar .7z, .pdf">
     <p>Allowed formats:</p>
