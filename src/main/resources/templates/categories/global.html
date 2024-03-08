@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p> Great, you like {{category}}!!</p>
+{{#writeups}}
+<a href="writeup/{{category}}/{{id}}">{{author}} {{title}}</a><br>
+{{/writeups}}
+
+{{^writeups}}
+<p>No {{category}} writeups yet.</p>
+{{/writeups}}
+
+</body>
+</html>

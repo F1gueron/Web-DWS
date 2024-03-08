@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.UUID;
 
+
 import es.board.webdws.service.AuthorSession;
 import es.board.webdws.service.FileService;
 import es.board.webdws.service.ImageService;
 import es.board.webdws.service.WriteupService;
 
 
-import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -58,36 +58,56 @@ public class WriteupController {
     }
 
     //Delete Writeup
-    @GetMapping("/writeup/{id}/delete")
-    public String deleteWriteup(Model model, @PathVariable long id) throws IOException {
+    @GetMapping("/writeup/{category}/{id}/delete")
+    public String deleteWriteup(Model model, @PathVariable long id, @PathVariable String category) throws IOException {
 
         writeupService.deleteById(id);
 
         // imageService.deleteImage(POSTS_FOLDER, id);
 
-        return "deleted_forum";
+        return "deleted_writeup";
     }
 
     //Download File to user
-    @GetMapping("/writeup/{id}/file")
+    @GetMapping("/writeup/{category}/{id}/file")
     public ResponseEntity<Object> downloadFile(Writeup writeup,@PathVariable int id, @RequestParam(required = false) boolean download) throws MalformedURLException {
         String name = writeup.getFileName();
         return fileService.createResponseFromFile(POSTS_FOLDER, name, download);
     }
 
-    @GetMapping("/writeup/{id}/image")
+    @GetMapping("/writeup/{category}/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable String id, Writeup writeup) throws MalformedURLException {
 
         return imageService.createResponseFromImage(POSTS_FOLDER, writeup.getFileName());
     }
 
-    //Show writeups
+    //Show writeup "index"
     @GetMapping("/writeup")
     public String showWriteups(@RequestParam String category, Model model) {
-       if(category.equals("pwn")){
-           model.addAttribute("pwn", category);
-       }
+        model.addAttribute("writeups", writeupService.findAll());
+        switch (category) {
+            case "pwn" -> model.addAttribute("pwn",category);
+            case "mobile" -> model.addAttribute("mobile",category);
+            case "web" -> model.addAttribute("web",category);
+            case "misc" -> model.addAttribute("misc",category);
+            case "reversing" -> model.addAttribute("reversing",category);
+            case "cryptography" -> model.addAttribute("cryptography",category);
+        };
+
+        //model.addAttribute(belongsTo(category), category); fix this
         return "writeup";
+    }
+
+    //Show writeup
+    @GetMapping("/writeup/{category}/{id}")
+    public String showPost(Model model, @PathVariable long id, @PathVariable String category) {
+
+        Writeup writeup = writeupService.findById(id);
+        model.addAttribute("image", !writeup.getImageName().isEmpty());
+        //model.addAttribute("file", !writeup.getFileName().isEmpty());
+        model.addAttribute("writeup", writeup);
+
+        return "show_writeup";
     }
 
     //Save files
@@ -105,6 +125,7 @@ public class WriteupController {
         authorSession.incNumWriteups();
 
         model.addAttribute("numWriteup", authorSession.getNumWriteups());
+        model.addAttribute("storageLocation", writeup.getCategory());
 
         return "saved_writeup";
     }
@@ -132,5 +153,17 @@ public class WriteupController {
         imageService.saveImage(POSTS_FOLDER, writeup.getId(), image, final_image);
 
         writeup.setFileName(final_file);
+    }
+
+    private String belongsTo(String category){
+        return switch (category) {
+            case "pwn" -> "pnw";
+            case "mobile" -> "mobile";
+            case "web" -> "web";
+            case "misc" -> "misc";
+            case "reversing" -> "reversing";
+            case "cryptography" -> "cryptography";
+            default -> null;
+        };
     }
 }

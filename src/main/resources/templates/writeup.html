@@ -24,16 +24,32 @@
 <h1>Writeups</h1>
 
 {{#pwn}}
-<p>Great, you like pwn!!</p>
+    {{>categories/pwn}}
 {{/pwn}}
-{{#rev}}
-    <p>Great, you like reversing!!</p>
-{{/rev}}
 
+{{#reversing}}
+    {{>categories/reversing}}
+{{/reversing}}
+
+{{#mobile}}
+    {{>categories/mobile}}
+{{/mobile}}
+
+{{#web}}
+    {{>categories/web}}
+{{/web}}
+
+{{#misc}}
+    {{>categories/misc}}
+{{/misc}}
+
+{{#cryptography}}
+    {{>categories/cryptography}}
+{{/cryptography}}
 
 
 
 <br>
-<a href="write/new">New Writeup</a>
+<a href="writeup/new">New Writeup</a>
 </body>
 </html>
