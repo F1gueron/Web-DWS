@@ -177,7 +177,7 @@ public class ForumController {
 
 
     private String handleFile(MultipartFile file){
-        String new_filename = null;
+        String new_filename = "";
         if (!file.isEmpty()){
             new_filename = file_to_UUID(file);
         }

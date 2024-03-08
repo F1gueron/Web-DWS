@@ -59,11 +59,12 @@ public class WriteupController {
 
     //Delete Writeup
     @GetMapping("/writeup/{id}/delete")
-    public String deleteWriteup(Model model, @PathVariable long id) throws IOException {
+    public String deleteWriteup(Writeup writeup, @PathVariable long id) throws IOException {
 
         writeupService.deleteById(id);
 
-        // imageService.deleteImage(POSTS_FOLDER, id);
+        imageService.deleteImage(POSTS_FOLDER, writeup.getImageName());
+        fileService.deleteFile(POSTS_FOLDER, writeup.getFileName());
 
         return "deleted_writeup";
     }
