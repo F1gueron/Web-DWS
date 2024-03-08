@@ -15,13 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.board.webdws.model.Writeup;
+
 
 @Controller
 public class WriteupController {
@@ -40,6 +38,8 @@ public class WriteupController {
     @Autowired
     private FileService fileService;
 
+
+
     // Create Writeup
     @GetMapping("/writeup/new")
     public String newWriteup(Model model) {
@@ -49,7 +49,7 @@ public class WriteupController {
         return "creation_pages/new_writeup";
     }
 
-    @PostMapping("/writeup/new")
+    @PostMapping("/new")
     public String newWriteup(@RequestParam("Category") String category, Model model, Writeup writeup, MultipartFile image, MultipartFile file) throws IOException {
 
         writeup.setCategory(category);

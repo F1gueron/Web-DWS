@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    margin: 50px 70px;
+    background-image: url(../images/keyboard_bg.jpg);
+    background-position: center;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+}
+
+
+a {
+    background: white;
+    border-radius: 10px;
+    color: black;
+    padding: 3px 6px;
+    text-decoration: none;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease 0s;
+}
+
+a:hover {
+    background-color: lightgrey;
+    transition: all 0.3s ease 0s;
+}
+
+input, textarea {
+    backdrop-filter: blur(20px);
+    background: transparent;
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
+    outline: none;
+    font-family: "Montserrat", sans-serif;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+
+
+input::placeholder, textarea::placeholder {
+    font-family: "Montserrat", sans-serif;
+}
+
+.post-comment-btn {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    font-size: 18px;
+    font-family: "Montserrat", sans-serif;
+    padding: 3px 10px;
+    margin-outside: 4px;
+    transition: all 0.3s ease 0s;
+
+}
+
+.post-comment-btn:hover {
+    cursor: pointer;
+    background: #e3e3e3;
+    transition: all 0.3s ease 0s;
+
+
+}
+
+.comment-container {
+    backdrop-filter: blur(12px);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 5px 10px;
+    margin-outside: 4px;
+    width: 50%;
+}
+
+.comment-header {
+    font-size: 13px;
+    color: lightgrey;
+}
+
+.forum-text-container {
+    width: 100%;
+}
+
+.forum-text-container p {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    line-height: 40px;
+}
