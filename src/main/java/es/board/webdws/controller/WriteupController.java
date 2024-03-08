@@ -58,8 +58,8 @@ public class WriteupController {
     }
 
     //Delete Writeup
-    @GetMapping("/writeup/{category}/{id}/delete")
-    public String deleteWriteup(Model model, @PathVariable long id, @PathVariable String category) throws IOException {
+    @GetMapping("/writeup/{id}/delete")
+    public String deleteWriteup(Model model, @PathVariable long id) throws IOException {
 
         writeupService.deleteById(id);
 
@@ -69,44 +69,35 @@ public class WriteupController {
     }
 
     //Download File to user
-    @GetMapping("/writeup/{category}/{id}/file")
-    public ResponseEntity<Object> downloadFile(Writeup writeup,@PathVariable int id, @RequestParam(required = false) boolean download) throws MalformedURLException {
+    @GetMapping("/writeup/{id}/file")
+    public ResponseEntity<Object> downloadFile(Writeup writeup, @RequestParam(required = false) boolean download) throws MalformedURLException {
         String name = writeup.getFileName();
         return fileService.createResponseFromFile(POSTS_FOLDER, name, download);
     }
 
-    @GetMapping("/writeup/{category}/{id}/image")
-    public ResponseEntity<Object> downloadImage(@PathVariable String id, Writeup writeup) throws MalformedURLException {
+    @GetMapping("/writeup/{id}/image")
+    public ResponseEntity<Object> downloadImage( Writeup writeup) throws MalformedURLException {
 
         return imageService.createResponseFromImage(POSTS_FOLDER, writeup.getFileName());
     }
 
     //Show writeup "index"
     @GetMapping("/writeup")
-    public String showWriteups(@RequestParam String category, Model model) {
-        model.addAttribute("writeups", writeupService.findAll());
-        switch (category) {
-            case "pwn" -> model.addAttribute("pwn",category);
-            case "mobile" -> model.addAttribute("mobile",category);
-            case "web" -> model.addAttribute("web",category);
-            case "misc" -> model.addAttribute("misc",category);
-            case "reversing" -> model.addAttribute("reversing",category);
-            case "cryptography" -> model.addAttribute("cryptography",category);
-        };
-        //model.addAttribute(belongsTo(category), category); fix this
+    public String listWriteups(@RequestParam String category, Model model) {
+        model.addAttribute("writeups", writeupService.findByCategory(category));
         return "writeup";
     }
 
     //Show writeup
-    @GetMapping("/writeup/{category}/{id}")
-    public String showPost(Model model, @PathVariable long id, @PathVariable String category) {
+    @GetMapping("/writeup/{id}")
+    public String showWriteup(Model model, @PathVariable long id) {
 
         Writeup writeup = writeupService.findById(id);
-        if (writeupService.isCategory(category,writeup)){
-            model.addAttribute("image", !writeup.getImageName().isEmpty());
-            //model.addAttribute("file", !writeup.getFileName().isEmpty());
-            model.addAttribute("writeup", writeup);
-        }
+
+        model.addAttribute("image", !writeup.getImageName().isEmpty());
+        model.addAttribute("file", !writeup.getFileName().isEmpty());
+        model.addAttribute("writeup", writeup);
+
 
         return "show_writeup";
     }
@@ -137,7 +128,7 @@ public class WriteupController {
 
 
     private String handleFile(MultipartFile file){
-        String new_filename = null;
+        String new_filename = "";
         if (!file.isEmpty()){
             new_filename = file_to_UUID(file);
         }
@@ -156,15 +147,4 @@ public class WriteupController {
         writeup.setFileName(final_file);
     }
 
-    private String belongsTo(String category){
-        return switch (category) {
-            case "pwn" -> "pnw";
-            case "mobile" -> "mobile";
-            case "web" -> "web";
-            case "misc" -> "misc";
-            case "reversing" -> "reversing";
-            case "cryptography" -> "cryptography";
-            default -> null;
-        };
-    }
 }
