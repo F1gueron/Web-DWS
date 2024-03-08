@@ -138,13 +138,15 @@ public class ForumController {
 
     //Download File to user
     @GetMapping("/forum/{id}/file")
-    public ResponseEntity<Object> downloadFile(Forum forum, @RequestParam(required = false) boolean download) throws MalformedURLException {
-        String name = forum.getFileName();
-        return fileService.createResponseFromFile(POSTS_FOLDER, name, download);
+    public ResponseEntity<Object> downloadFile(@PathVariable long id, @RequestParam(required = false) boolean download) throws MalformedURLException {
+        Forum forum = forumService.findById(id);
+        return fileService.createResponseFromFile(POSTS_FOLDER, forum.getFileName(), download);
     }
 
     @GetMapping("/forum/{id}/image")
-    public ResponseEntity<Object> downloadImage(Forum forum) throws MalformedURLException {
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws MalformedURLException {
+
+        Forum forum = forumService.findById(id);
 
         return imageService.createResponseFromImage(POSTS_FOLDER, forum.getFileName());
     }
@@ -177,7 +179,7 @@ public class ForumController {
 
 
     private String handleFile(MultipartFile file){
-        String new_filename = "";
+        String new_filename = null;
         if (!file.isEmpty()){
             new_filename = file_to_UUID(file);
         }
@@ -190,10 +192,15 @@ public class ForumController {
         String final_file = handleFile(file);
         String final_image = handleFile(image);
 
-        fileService.saveFile(POSTS_FOLDER, forum.getId(), file, final_file);
-        imageService.saveImage(POSTS_FOLDER, forum.getId(), image, final_image);
+        if (final_file != null){
+            fileService.saveFile(POSTS_FOLDER, forum.getId(), file, final_file);
+            forum.setFileName(final_file);
+        }
+        if (final_image != null) {
+            imageService.saveImage(POSTS_FOLDER, forum.getId(), image, final_image);
+            forum.setImageName(final_image);
+        }
 
-        forum.setFileName(final_file);
     }
 
 }

@@ -71,15 +71,17 @@ public class WriteupController {
 
     //Download File to user
     @GetMapping("/writeup/{id}/file")
-    public ResponseEntity<Object> downloadFile(Writeup writeup, @RequestParam(required = false) boolean download) throws MalformedURLException {
-        String name = writeup.getFileName();
-        return fileService.createResponseFromFile(POSTS_FOLDER, name, download);
+    public ResponseEntity<Object> downloadFile(@PathVariable long id, @RequestParam(required = false) boolean download) throws MalformedURLException {
+        Writeup writeup = writeupService.findById(id);
+        return fileService.createResponseFromFile(POSTS_FOLDER, writeup.getFileName(), download);
     }
 
     @GetMapping("/writeup/{id}/image")
-    public ResponseEntity<Object> downloadImage( Writeup writeup) throws MalformedURLException {
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws MalformedURLException {
 
-        return imageService.createResponseFromImage(POSTS_FOLDER, writeup.getFileName());
+        Writeup writeup = writeupService.findById(id);
+
+        return imageService.createResponseFromImage(POSTS_FOLDER, writeup.getImageName());
     }
 
     //Show writeup "index"
@@ -94,7 +96,6 @@ public class WriteupController {
     public String showWriteup(Model model, @PathVariable long id) {
 
         Writeup writeup = writeupService.findById(id);
-
         model.addAttribute("image", !writeup.getImageName().isEmpty());
         model.addAttribute("file", !writeup.getFileName().isEmpty());
         model.addAttribute("writeup", writeup);
@@ -129,7 +130,7 @@ public class WriteupController {
 
 
     private String handleFile(MultipartFile file){
-        String new_filename = "";
+        String new_filename = null;
         if (!file.isEmpty()){
             new_filename = file_to_UUID(file);
         }
@@ -142,10 +143,17 @@ public class WriteupController {
         String final_file = handleFile(file);
         String final_image = handleFile(image);
 
-        fileService.saveFile(POSTS_FOLDER, writeup.getId(), file, final_file);
-        imageService.saveImage(POSTS_FOLDER, writeup.getId(), image, final_image);
+        if (final_file != null){
+            fileService.saveFile(POSTS_FOLDER, writeup.getId(), file, final_file);
+            writeup.setFileName(final_file);
+        }
+        if (final_image != null) {
+            imageService.saveImage(POSTS_FOLDER, writeup.getId(), image, final_image);
+            writeup.setImageName(final_image);
+        }
 
-        writeup.setFileName(final_file);
+
+
     }
 
 }
