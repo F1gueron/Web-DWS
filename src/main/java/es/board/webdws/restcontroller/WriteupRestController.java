@@ -2,7 +2,6 @@ package es.board.webdws.restcontroller;
 
 
 import es.board.webdws.model.Writeup;
-import es.board.webdws.service.AuthorSession;
 import es.board.webdws.service.FileService;
 import es.board.webdws.service.ImageService;
 import es.board.webdws.service.WriteupService;
@@ -28,7 +27,6 @@ public class WriteupRestController {
 
     @Autowired
     private WriteupService writeupService;
-
 
     @Autowired
     private ImageService imageService;
