@@ -1,6 +1,6 @@
 package es.board.webdws.restcontroller;
 
-import es.board.webdws.model.Forum;
+
 import es.board.webdws.model.Writeup;
 import es.board.webdws.service.AuthorSession;
 import es.board.webdws.service.FileService;
@@ -9,7 +9,7 @@ import es.board.webdws.service.WriteupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.Collection;
-import java.util.UUID;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
@@ -30,8 +29,6 @@ public class WriteupRestController {
     @Autowired
     private WriteupService writeupService;
 
-    @Autowired
-    private AuthorSession authorSession;
 
     @Autowired
     private ImageService imageService;
