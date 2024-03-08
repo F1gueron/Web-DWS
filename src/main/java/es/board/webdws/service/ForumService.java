@@ -38,6 +38,7 @@ public class ForumService {
         this.forum.put(id, forum);
     }
 
+
     public void deleteById(long id) {
         this.forum.remove(id);
     }

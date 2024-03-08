@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.UUID;
 
+import es.board.webdws.model.Comment;
 import es.board.webdws.model.Forum;
 import es.board.webdws.service.AuthorSession;
 import es.board.webdws.service.FileService;
@@ -15,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -75,7 +73,7 @@ public class ForumController {
 
     //Create forum
     @GetMapping("/forum/new")
-    public String newForum(Model model) {
+    public String get_new_forum(Model model) {
 
         model.addAttribute("author", authorSession.getAuthor());
 
@@ -83,7 +81,7 @@ public class ForumController {
     }
 
     @PostMapping("/forum/new")
-    public String newForum(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {
+    public String post_new_forum(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {
 
         return uploadData(model, forum, image, file);
     }
@@ -113,8 +111,24 @@ public class ForumController {
         model.addAttribute("file", !forum.getFileName().isEmpty());
         model.addAttribute("forum", forum);
 
+        if(forum.getComments() != null){
+            model.addAttribute("comments", forum.getComments());
+        }
+
         return "show_forum";
     }
+
+
+    @PostMapping("/forum/{id}/comments")
+    public String create_comment(@ModelAttribute Comment comment, @PathVariable long id){
+        Forum forum = forumService.findById(id);
+
+        forum.addComment(comment);
+
+        return "redirect:/forum/{id}";
+    }
+
+
 
     //Redirect to log in
     @GetMapping("/login")
