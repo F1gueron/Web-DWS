@@ -2,6 +2,7 @@ package es.board.webdws.service;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -39,5 +40,10 @@ public class WriteupService {
     public void deleteById(long id) {
         this.writeup.remove(id);
     }
+
+    public boolean isCategory(String category, Writeup writeup){
+        return category.equals(writeup.getCategory());
+    }
+
 
 }

@@ -93,7 +93,6 @@ public class WriteupController {
             case "reversing" -> model.addAttribute("reversing",category);
             case "cryptography" -> model.addAttribute("cryptography",category);
         };
-
         //model.addAttribute(belongsTo(category), category); fix this
         return "writeup";
     }
@@ -103,9 +102,11 @@ public class WriteupController {
     public String showPost(Model model, @PathVariable long id, @PathVariable String category) {
 
         Writeup writeup = writeupService.findById(id);
-        model.addAttribute("image", !writeup.getImageName().isEmpty());
-        //model.addAttribute("file", !writeup.getFileName().isEmpty());
-        model.addAttribute("writeup", writeup);
+        if (writeupService.isCategory(category,writeup)){
+            model.addAttribute("image", !writeup.getImageName().isEmpty());
+            //model.addAttribute("file", !writeup.getFileName().isEmpty());
+            model.addAttribute("writeup", writeup);
+        }
 
         return "show_writeup";
     }
