@@ -33,7 +33,7 @@ public class Writeup {
     }
 
     public String getImageName() {
-        return imageName;
+        return this.imageName;
     }
 
     public void setImageName(String imageName) {
@@ -41,7 +41,7 @@ public class Writeup {
     }
 
     public String getFileName() {
-        return fileName;
+        return this.fileName;
     }
 
     public void setFileName(String fileName) {

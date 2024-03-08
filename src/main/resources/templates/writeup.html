@@ -5,14 +5,14 @@
     <title>CyberSecLabs</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/fake/styles.css">
+<!--    <link rel="stylesheet" href="/styles.css">-->
 </head>
 <body>
 <header>
-    <div class="logo-container"><img class="logo" src="/static/images/logo4.jpg" alt="logo"><span>CyberSecLabs</span></div>
+    <div class="logo-container"><img class="logo" src="/images/logo4.jpg" alt="logo"><span>CyberSecLabs</span></div>
     <nav>
         <ul class="nav-links">
-            <li><a href="/">Writeups</a></li>
+            <li><a href="/forum">Forums</a></li>
             <!--<li><a href="/posts">Forum</a></li>
             <li><a href="/todo">Events</a></li>-->
         </ul>
@@ -21,17 +21,13 @@
 </header>
 <hr>
 
-<h1>Forums</h1>
+<h1>Writeups</h1>
 
-{{#forums}}
-<a href="forum/{{id}}">{{title}} by {{author}}</a><br>
-{{/forums}}
-
-{{^forums}}
-<p>No posts yet.</p>
-{{/forums}}
+{{#writeups}}
+<a href="/writeup/{{id}}"> {{author}} {{title}}</a>
+{{/writeups}}
 
 <br>
-<a href="forum/new">New Forum</a>
+<a href="writeup/new">New Writeup</a>
 </body>
 </html>

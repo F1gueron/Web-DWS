@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.UUID;
 
+import es.board.webdws.model.Comment;
 import es.board.webdws.model.Forum;
 import es.board.webdws.service.AuthorSession;
 import es.board.webdws.service.FileService;
@@ -15,17 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
 public class ForumController {
 
-    private static final String POSTS_FOLDER = "posts";
+    private static final String POSTS_FOLDER = "forum";
 
     @Autowired
     private ForumService forumService;
@@ -41,9 +39,9 @@ public class ForumController {
 
 
     @GetMapping("/forum")
-    public String showPosts(Model model, HttpSession session) {
+    public String showForums(Model model, HttpSession session) {
 
-        model.addAttribute("posts", forumService.findAll());
+        model.addAttribute("forums", forumService.findAll());
         model.addAttribute("welcome", session.isNew());
 
         return "forum";
@@ -74,16 +72,16 @@ public class ForumController {
      */
 
     //Create forum
-    @GetMapping("/forum/newforum")
-    public String newForum(Model model) {
+    @GetMapping("/forum/new")
+    public String get_new_forum(Model model) {
 
         model.addAttribute("author", authorSession.getAuthor());
 
         return "creation_pages/new_forum";
     }
 
-    @PostMapping("/forum/newforum")
-    public String newForum(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {
+    @PostMapping("/forum/new")
+    public String post_new_forum(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {
 
         return uploadData(model, forum, image, file);
     }
@@ -105,7 +103,7 @@ public class ForumController {
     }
 
 
-    @GetMapping("/post/{id}")
+    @GetMapping("/forum/{id}")
     public String showPost(Model model, @PathVariable long id) {
 
         Forum forum = forumService.findById(id);
@@ -113,8 +111,31 @@ public class ForumController {
         model.addAttribute("file", !forum.getFileName().isEmpty());
         model.addAttribute("forum", forum);
 
+        if(forum.getComments() != null){
+            model.addAttribute("comments", forum.getComments());
+        }
+
         return "show_forum";
     }
+
+
+    @PostMapping("/forum/{id}/comments")
+    public String create_comment(@ModelAttribute Comment comment, @PathVariable long id){
+        Forum forum = forumService.findById(id);
+
+        forum.addComment(comment);
+
+        return "redirect:/forum/{id}";
+    }
+
+
+
+    //Redirect to log in
+    @GetMapping("/login")
+    public String login(){
+        return "../static/login";
+    }
+
 
 
     private String uploadData(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {
@@ -131,13 +152,15 @@ public class ForumController {
 
     //Download File to user
     @GetMapping("/forum/{id}/file")
-    public ResponseEntity<Object> downloadFile(Forum forum, @RequestParam(required = false) boolean download) throws MalformedURLException {
-        String name = forum.getFileName();
-        return fileService.createResponseFromFile(POSTS_FOLDER, name, download);
+    public ResponseEntity<Object> downloadFile(@PathVariable long id, @RequestParam(required = false) boolean download) throws MalformedURLException {
+        Forum forum = forumService.findById(id);
+        return fileService.createResponseFromFile(POSTS_FOLDER, forum.getFileName(), download);
     }
 
     @GetMapping("/forum/{id}/image")
-    public ResponseEntity<Object> downloadImage(Forum forum) throws MalformedURLException {
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws MalformedURLException {
+
+        Forum forum = forumService.findById(id);
 
         return imageService.createResponseFromImage(POSTS_FOLDER, forum.getFileName());
     }
@@ -183,10 +206,15 @@ public class ForumController {
         String final_file = handleFile(file);
         String final_image = handleFile(image);
 
-        fileService.saveFile(POSTS_FOLDER, forum.getId(), file, final_file);
-        imageService.saveImage(POSTS_FOLDER, forum.getId(), image, final_image);
+        if (final_file != null){
+            fileService.saveFile(POSTS_FOLDER, forum.getId(), file, final_file);
+            forum.setFileName(final_file);
+        }
+        if (final_image != null) {
+            imageService.saveImage(POSTS_FOLDER, forum.getId(), image, final_image);
+            forum.setImageName(final_image);
+        }
 
-        forum.setFileName(final_file);
     }
 
 }

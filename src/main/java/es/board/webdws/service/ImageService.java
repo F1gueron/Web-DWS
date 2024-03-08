@@ -37,7 +37,7 @@ public class ImageService {
         Path folder = FILES_FOLDER.resolve(folderName);
 
         Files.createDirectories(folder);
-        String final_fileName = imageId + "_" + imageName; //
+        String final_fileName = imageName; //
         Path newFile = folder.resolve(final_fileName);
         image.transferTo(newFile);
     }

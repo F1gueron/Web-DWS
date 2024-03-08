@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.UUID;
 
+
 import es.board.webdws.service.AuthorSession;
 import es.board.webdws.service.FileService;
 import es.board.webdws.service.ImageService;
@@ -25,7 +26,7 @@ import es.board.webdws.model.Writeup;
 @Controller
 public class WriteupController {
 
-    private static final String POSTS_FOLDER = "posts";
+    private static final String POSTS_FOLDER = "writeup";
 
     @Autowired
     private WriteupService writeupService;
@@ -40,7 +41,7 @@ public class WriteupController {
     private FileService fileService;
 
     // Create Writeup
-    @GetMapping("/writeup/newwriteup")
+    @GetMapping("/writeup/new")
     public String newWriteup(Model model) {
 
         model.addAttribute("author", authorSession.getAuthor());
@@ -48,7 +49,7 @@ public class WriteupController {
         return "creation_pages/new_writeup";
     }
 
-    @PostMapping("/writeup/newwriteup")
+    @PostMapping("/writeup/new")
     public String newWriteup(@RequestParam("Category") String category, Model model, Writeup writeup, MultipartFile image, MultipartFile file) throws IOException {
 
         writeup.setCategory(category);
@@ -58,26 +59,49 @@ public class WriteupController {
 
     //Delete Writeup
     @GetMapping("/writeup/{id}/delete")
-    public String deleteWriteup(Model model, @PathVariable long id) throws IOException {
+    public String deleteWriteup(Writeup writeup, @PathVariable long id) throws IOException {
 
         writeupService.deleteById(id);
 
-        // imageService.deleteImage(POSTS_FOLDER, id);
+        imageService.deleteImage(POSTS_FOLDER, writeup.getImageName());
+        fileService.deleteFile(POSTS_FOLDER, writeup.getFileName());
 
-        return "deleted_forum";
+        return "deleted_writeup";
     }
 
     //Download File to user
     @GetMapping("/writeup/{id}/file")
-    public ResponseEntity<Object> downloadFile(Writeup writeup,@PathVariable int id, @RequestParam(required = false) boolean download) throws MalformedURLException {
-        String name = writeup.getFileName();
-        return fileService.createResponseFromFile(POSTS_FOLDER, name, download);
+    public ResponseEntity<Object> downloadFile(@PathVariable long id, @RequestParam(required = false) boolean download) throws MalformedURLException {
+        Writeup writeup = writeupService.findById(id);
+        return fileService.createResponseFromFile(POSTS_FOLDER, writeup.getFileName(), download);
     }
 
     @GetMapping("/writeup/{id}/image")
-    public ResponseEntity<Object> downloadImage(@PathVariable String id, Writeup writeup) throws MalformedURLException {
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws MalformedURLException {
 
-        return imageService.createResponseFromImage(POSTS_FOLDER, writeup.getFileName());
+        Writeup writeup = writeupService.findById(id);
+
+        return imageService.createResponseFromImage(POSTS_FOLDER, writeup.getImageName());
+    }
+
+    //Show writeup "index"
+    @GetMapping("/writeup")
+    public String listWriteups(@RequestParam String category, Model model) {
+        model.addAttribute("writeups", writeupService.findByCategory(category));
+        return "writeup";
+    }
+
+    //Show writeup
+    @GetMapping("/writeup/{id}")
+    public String showWriteup(Model model, @PathVariable long id) {
+
+        Writeup writeup = writeupService.findById(id);
+        model.addAttribute("image", !writeup.getImageName().isEmpty());
+        model.addAttribute("file", !writeup.getFileName().isEmpty());
+        model.addAttribute("writeup", writeup);
+
+
+        return "show_writeup";
     }
 
     //Save files
@@ -95,6 +119,7 @@ public class WriteupController {
         authorSession.incNumWriteups();
 
         model.addAttribute("numWriteup", authorSession.getNumWriteups());
+        model.addAttribute("storageLocation", writeup.getCategory());
 
         return "saved_writeup";
     }
@@ -118,9 +143,17 @@ public class WriteupController {
         String final_file = handleFile(file);
         String final_image = handleFile(image);
 
-        fileService.saveFile(POSTS_FOLDER, writeup.getId(), file, final_file);
-        imageService.saveImage(POSTS_FOLDER, writeup.getId(), image, final_image);
+        if (final_file != null){
+            fileService.saveFile(POSTS_FOLDER, writeup.getId(), file, final_file);
+            writeup.setFileName(final_file);
+        }
+        if (final_image != null) {
+            imageService.saveImage(POSTS_FOLDER, writeup.getId(), image, final_image);
+            writeup.setImageName(final_image);
+        }
 
-        writeup.setFileName(final_file);
+
+
     }
+
 }

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ForumService {
 
-    private ConcurrentMap<Long, Forum> posts = new ConcurrentHashMap<>();
+    private ConcurrentMap<Long, Forum> forum = new ConcurrentHashMap<>();
     private AtomicLong nextId = new AtomicLong();
 
     public ForumService() {
@@ -22,11 +22,11 @@ public class ForumService {
     }
 
     public Collection<Forum> findAll() {
-        return posts.values();
+        return forum.values();
     }
 
     public Forum findById(long id) {
-        return posts.get(id);
+        return forum.get(id);
     }
 
     public void save(Forum forum) {
@@ -35,11 +35,12 @@ public class ForumService {
 
         forum.setId(id);
 
-        this.posts.put(id, forum);
+        this.forum.put(id, forum);
     }
 
+
     public void deleteById(long id) {
-        this.posts.remove(id);
+        this.forum.remove(id);
     }
 
 }

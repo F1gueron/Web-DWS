@@ -1,7 +1,7 @@
 package es.board.webdws.model;
 
-import javax.xml.stream.events.Comment;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Forum {
@@ -23,7 +23,7 @@ public class Forum {
         this.category = category;
     }
 
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
     public List<Comment> getComments() {
         return comments;
@@ -50,6 +50,10 @@ public class Forum {
     }
 
     private LocalDate date;
+
+    public void addComment(Comment comment){
+        this.comments.add(comment);
+    }
 
     public LocalDate getDate() {
         return date;

@@ -27,7 +27,7 @@ public class FileService {
         Path folder = FILES_FOLDER.resolve(folderName);
 
         Files.createDirectories(folder);
-        String final_fileName = fileId + "_" + fileName; //
+        String final_fileName = fileName; //
         Path newFile = folder.resolve(final_fileName);
         file.transferTo(newFile);
     }

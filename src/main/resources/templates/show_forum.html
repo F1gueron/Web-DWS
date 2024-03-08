@@ -1,5 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+    body{
+        margin-left: 15px;
+        background-image: url(/images/keyboard_bg.jpg);
+        background-position: center;
+        color: white;
+        font-family: "Montserrat", sans-serif;
+    }
+</style>
+
 <body>
 <p>Author: {{forum.author}}</p>
 <p>Title: {{forum.title}}</p>
@@ -36,6 +47,31 @@
 <a href="/forum/{{forum.id}}/delete">Delete forum</a>
 <br>
 <br>
+
+<hr>
+<h2> Comments </h2>
+<p>Write your comment: </p>
+<form action="/forum/{{forum.id}}/comments" method="post" enctype="multipart/form-data">
+    <p>Author: </p>
+    <input type='text' name='author' value='{{#author}}{{.}}{{/author}}'/>
+
+    <p>Text:</p>
+    <textarea name='text' rows=3 cols=20 required></textarea>
+
+    <p>Date: </p>
+    <input type="date" name="date" required>
+    <input type='submit' value='Save'/>
+</form>
+{{#comments}}
+<div class="comment-container" style="padding: 20px; margin:auto; border-color: #333333; backdrop-filter: blur(12px); border-radius: 10px; background-color: rgba(255, 255, 255, 0.1); padding: 10px 10px">
+        <p>{{date}} by {{author}}</p>
+        <p>{{text}}</p>
+</div>
+{{/comments}}
+
+{{^comments}}
+    <p>No one commented here yet, be the first!</p>
+{{/comments}}
 
 <a href="/">Back</a>
 </body>
