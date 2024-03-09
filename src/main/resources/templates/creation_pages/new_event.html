@@ -1,0 +1,22 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <title>CyberSec Blog</title>
+</head>
+<body>
+<h1>New Event</h1>
+<form action="/event/new" method="post" enctype="multipart/form-data">
+    <p>Author: </p>
+    <input type='text' name='author' value='{{#author}}{{.}}{{/author}}'/>
+    <p>Title:</p>
+    <input type='text' name='title'/>
+    <p>Text:</p>
+    <textarea name='text' rows=5 cols=40></textarea>
+    <p>Image file:</p>
+    <input type='file' name='image' accept=".jpg, .jpeg"/>
+    <p>Date: </p>
+    <input type="date" name="date">
+    <input type='submit' value='Save'/>
+</form>
+</body>
+</html>
