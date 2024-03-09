@@ -1,13 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-body {
-    margin: 50px 70px;
-    background-image: url(../images/keyboard_bg.jpg);
-    background-position: center;
-    color: white;
-    font-family: "Montserrat", sans-serif;
-}
-
 
 a {
     background: white;
@@ -54,10 +46,8 @@ input::placeholder, textarea::placeholder {
 
 .post-comment-btn:hover {
     cursor: pointer;
-    background: #e3e3e3;
+    background: lightskyblue;
     transition: all 0.3s ease 0s;
-
-
 }
 
 .comment-container {
@@ -66,7 +56,9 @@ input::placeholder, textarea::placeholder {
     background-color: rgba(255, 255, 255, 0.1);
     padding: 5px 10px;
     margin-outside: 4px;
-    width: 50%;
+    min-width: 50%;
+    max-width: 50%;
+    overflow-wrap: break-word;
 }
 
 .comment-header {
@@ -83,4 +75,13 @@ input::placeholder, textarea::placeholder {
     display: flex;
     justify-content: center;
     line-height: 40px;
+}
+
+.forum-header h1 {
+    font-size: 50px;
+    text-align: center;
+}
+
+.forum-header p{
+    text-align: center;
 }

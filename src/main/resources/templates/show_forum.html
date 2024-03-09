@@ -3,6 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{forum.title}}</title>
+    <link rel="stylesheet" href="/styles/common.css">
     <link rel="stylesheet" href="/styles/show_forum.css">
 </head>
 <body>
@@ -34,6 +35,7 @@
 {{/file}}
 
 <a class="delete-forum" href="/forum/{{forum.id}}/delete">Delete forum</a>
+<a href="/">Home</a>
 <br>
 <br>
 
@@ -44,9 +46,7 @@
     <input type="date" name="date" required>
     <br>
     <br>
-    <textarea placeholder="What do you want to say?" type="text" name='text' rows=4 cols=75 required></textarea>
-
-
+    <textarea placeholder="What do you want to say?" maxlength="500" type="text" name='text' rows=4 cols=75 required></textarea>
     <br>
     <br>
     <button type="submit" class="post-comment-btn">Post comment</button>
@@ -64,6 +64,6 @@
     <p>No one commented here yet, be the first!</p>
 {{/comments}}
 
-<a href="/">Back</a>
+
 </body>
 </html>
