@@ -39,8 +39,8 @@ public class WriteupRestController {
     public Collection<Writeup> listWriteups(@RequestParam String category) {
         return writeupService.findByCategory(category);
     }
-    @PostMapping("/writeup/new")
-    public ResponseEntity<Writeup> post_new_forum(@RequestBody Writeup writeup) {
+    @PostMapping("/writeup")
+    public ResponseEntity<Writeup> post_new_Writeup(@RequestBody Writeup writeup) {
 
         writeupService.save(writeup);
 
@@ -76,15 +76,23 @@ public class WriteupRestController {
         }
     }
 
-    @GetMapping("/writeup/{id}/delete")
-    public String deleteWriteup(Writeup writeup, @PathVariable long id) throws IOException {
+    @DeleteMapping("/writeup/{id}")
+    public ResponseEntity<Writeup> deleteWriteup
+            (@PathVariable long id) throws IOException {
 
-        writeupService.deleteById(id);
+        Writeup writeup = writeupService.findById(id);
 
-        imageService.deleteImage(POSTS_FOLDER, writeup.getImageName());
-        fileService.deleteFile(POSTS_FOLDER, writeup.getFileName());
+        if (writeup != null) {
+            writeupService.deleteById(id);
 
-        return "deleted_writeup";
+            if(writeup.getImageName() != null) {
+                this.imageService.deleteImage(POSTS_FOLDER, writeup.getImageName());
+            }
+
+            return ResponseEntity.ok(writeup);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
     //Download File to user
 

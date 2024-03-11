@@ -35,7 +35,7 @@ public class ForumRestController {
         return forumService.findAll();
     }
 
-    @PostMapping("/forum/new")
+    @PostMapping("/forum")
     public ResponseEntity<Forum> post_new_forum(@RequestBody Forum forum) {
 
         forumService.save(forum);
@@ -111,7 +111,7 @@ public class ForumRestController {
         return imageService.createResponseFromImage(POSTS_FOLDER, forum.getImageName());
     }
 
-    @GetMapping("/forum/{id}/delete")
+    @DeleteMapping("/forum/{id}")
     public ResponseEntity<Forum> deleteForum(@PathVariable long id) throws IOException {
 
         Forum forum = forumService.findById(id);
