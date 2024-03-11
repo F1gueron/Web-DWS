@@ -50,7 +50,6 @@ public class ForumController {
 
     @GetMapping("/forum")
     public String showForums(Model model, HttpSession session) {
-
         model.addAttribute("forums", forumService.findAll());
         model.addAttribute("welcome", session.isNew());
 

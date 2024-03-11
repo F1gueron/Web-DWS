@@ -1,44 +1,42 @@
 package es.board.webdws.controller;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.UUID;
-
-import es.board.webdws.model.Comment;
-import es.board.webdws.model.Forum;
-import es.board.webdws.service.AuthorSession;
-import es.board.webdws.service.FileService;
-import es.board.webdws.service.ImageService;
-import es.board.webdws.service.ForumService;
+import es.board.webdws.service.UserService;
 import jakarta.servlet.http.HttpSession;
-
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 
 @Controller
 public class LoginController {
+    private final UserService userService;
+
+    public LoginController(UserService userService){
+        this.userService = userService;
+    }
 
     @GetMapping("/login")
-    public String show_login(){
+    public String loginForm(@RequestParam(value = "login_failed", required = false) boolean loginFailed, Model model) {
+        if (loginFailed) {
+            model.addAttribute("login_failed", true);
+        }
         return "../static/login";
     }
 
 
     @PostMapping("/login")
-    public String login(Model model, @RequestParam("username") String username,
+    public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
-                        @RequestParam(value = "remember", required = false) boolean remember){
+                        @RequestParam(value = "remember", required = false) boolean remember, HttpSession session){
 
-        if("admin".equals(username) && "admin".equals(password)){
-            return "redirect:/";
+        if(userService.validateUser(username, password)){
+            session.setAttribute("USER", username);
+            return "redirect:/new";
         }
         else {
-            model.addAttribute("login-failed", true);
-            return "redirect:/login";
+            return "redirect:/login?login_failed=true";
         }
 
 
