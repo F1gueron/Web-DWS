@@ -1,8 +1,16 @@
 <html>
+<head>
+    <link href="/styles/common.css" rel="stylesheet">
+</head>
+<style>
+    a:hover{
+        text-decoration: underline;
+    }
+</style>
 <body>
-<p>Forum has been saved correctly.</p>
-<p>You have created {{numForum}} forum so far.</p>
-<p>The title of the forum is {{title}}</p>
-<a href="/forum">Back</a>
+    <p>Forum has been saved correctly.</p>
+    <p>You have created <span style="font-weight: bold">{{numForum}}</span> forum so far.</p>
+    <p>The title of the forum is <span style="font-weight: bold"> {{title}} </span></p>
+    <a href="/forum">Back</a>
 </body>
 </html>

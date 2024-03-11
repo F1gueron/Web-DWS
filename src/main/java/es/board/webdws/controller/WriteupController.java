@@ -88,6 +88,7 @@ public class WriteupController {
     @GetMapping("/writeup")
     public String listWriteups(@RequestParam String category, Model model) {
         model.addAttribute("writeups", writeupService.findByCategory(category));
+        model.addAttribute("category", category);
         return "writeup";
     }
 
@@ -119,7 +120,6 @@ public class WriteupController {
         authorSession.incNumWriteups();
 
         model.addAttribute("numWriteup", authorSession.getNumWriteups());
-        model.addAttribute("storageLocation", writeup.getCategory());
 
         return "saved_writeup";
     }
