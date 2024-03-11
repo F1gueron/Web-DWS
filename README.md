@@ -17,3 +17,8 @@ Welcome to the CyberSecLabs, a comprehensive database for Capture The Flag chall
 - Jorge Figueras
 - Miguel Iglesias
 - Jorge Moreno
+
+
+## Preview of the homepage
+
+![image](https://github.com/F1gueron/Web-DWS/assets/85845820/98b1ad5e-d1eb-4c56-ada3-00ea84245074)

@@ -37,6 +37,22 @@ public class ForumController {
     @Autowired
     private FileService fileService;
 
+    @GetMapping("/new")
+    public String choosePost() {
+
+        return "create_new";
+    }
+
+    @GetMapping("/todo")
+    public String todo() {
+        return "todo";
+    }
+
+    //Redirect to log in
+    @GetMapping("/login")
+    public String login(){
+        return "../static/login";
+    }
 
     @GetMapping("/forum")
     public String showForums(Model model, HttpSession session) {
@@ -45,45 +61,6 @@ public class ForumController {
         model.addAttribute("welcome", session.isNew());
 
         return "forum";
-    }
-
-    @GetMapping("/")
-    public String landingPage() {
-
-        return "../static/index";
-    }
-
-
-
-    /*
-        Initial getmapping to show the choose type of post to create
-
-     */
-
-    @GetMapping("/new")
-    public String choosePost() {
-
-        return "create_new";
-    }
-
-    /*
-        getmapping to show the new_post that we have used until today
-
-     */
-
-    //Create forum
-    @GetMapping("/forum/new")
-    public String get_new_forum(Model model) {
-
-        model.addAttribute("author", authorSession.getAuthor());
-
-        return "creation_pages/new_forum";
-    }
-
-    @PostMapping("/forum/new")
-    public String post_new_forum(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {
-
-        return uploadData(model, forum, image, file);
     }
 
     /*
@@ -97,11 +74,21 @@ public class ForumController {
 
      */
 
-    @GetMapping("/todo")
-    public String todo() {
-        return "todo";
+    //Create forum
+
+    @GetMapping("/forum/new")
+    public String get_new_forum(Model model) {
+
+        model.addAttribute("author", authorSession.getAuthor());
+
+        return "creation_pages/new_forum";
     }
 
+    @PostMapping("/forum/new")
+    public String post_new_forum(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {
+
+        return uploadData(model, forum, image, file);
+    }
 
     @GetMapping("/forum/{id}")
     public String showPost(Model model, @PathVariable long id) {
@@ -118,7 +105,6 @@ public class ForumController {
         return "show_forum";
     }
 
-
     @PostMapping("/forum/{id}/comments")
     public String create_comment(@ModelAttribute Comment comment, @PathVariable long id){
         Forum forum = forumService.findById(id);
@@ -128,35 +114,12 @@ public class ForumController {
         return "redirect:/forum/{id}";
     }
 
-
-
-    //Redirect to log in
-    @GetMapping("/login")
-    public String login(){
-        return "../static/login";
-    }
-
-
-
-    private String uploadData(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {
-        uploadHandler(file, image, forum);
-        authorSession.setAuthor(forum.getAuthor());
-        authorSession.incNumForums();
-        String title = forum.getTitle();
-
-        model.addAttribute("numForum", authorSession.getNumForums());
-        model.addAttribute("title",title);
-
-        return "saved_forum";
-    }
-
     //Download File to user
     @GetMapping("/forum/{id}/file")
     public ResponseEntity<Object> downloadFile(@PathVariable long id, @RequestParam(required = false) boolean download) throws MalformedURLException {
         Forum forum = forumService.findById(id);
         return fileService.createResponseFromFile(POSTS_FOLDER, forum.getFileName(), download);
     }
-
     @GetMapping("/forum/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws MalformedURLException {
 
@@ -176,29 +139,17 @@ public class ForumController {
         return "deleted_forum";
     }
 
-    // Methods to handle images and files, probably remove image later, as it's a type of file
+    // Methods to handle images and files
+    private String uploadData(Model model, Forum forum, MultipartFile image, MultipartFile file) throws IOException {
+        uploadHandler(file, image, forum);
+        authorSession.setAuthor(forum.getAuthor());
+        authorSession.incNumForums();
+        String title = forum.getTitle();
 
-    private String file_to_UUID (MultipartFile file){
-        String new_fileName = UUID.randomUUID().toString();
-        String old_fileName = file.getOriginalFilename();
-        String fileExtension = get_file_extension(old_fileName); // handleFile checks if it is empty so this is never null.
+        model.addAttribute("numForum", authorSession.getNumForums());
+        model.addAttribute("title",title);
 
-        return new_fileName + fileExtension;
-    }
-
-
-    private String get_file_extension(String filename){
-        return filename.substring(filename.lastIndexOf("."));
-    }
-
-
-    private String handleFile(MultipartFile file){
-        String new_filename = null;
-        if (!file.isEmpty()){
-            new_filename = file_to_UUID(file);
-        }
-
-        return new_filename;
+        return "saved_forum";
     }
 
     private void uploadHandler(MultipartFile file, MultipartFile image, Forum forum) throws IOException {
@@ -215,6 +166,27 @@ public class ForumController {
             forum.setImageName(final_image);
         }
 
+    }
+
+    private String handleFile(MultipartFile file){
+        String new_filename = null;
+        if (!file.isEmpty()){
+            new_filename = file_to_UUID(file);
+        }
+
+        return new_filename;
+    }
+
+    private String file_to_UUID (MultipartFile file){
+        String new_fileName = UUID.randomUUID().toString();
+        String old_fileName = file.getOriginalFilename();
+        String fileExtension = get_file_extension(old_fileName); // handleFile checks if it is empty so this is never null.
+
+        return new_fileName + fileExtension;
+    }
+
+    private String get_file_extension(String filename){
+        return filename.substring(filename.lastIndexOf("."));
     }
 
 }
