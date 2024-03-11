@@ -30,11 +30,13 @@ public class ForumRestController {
     @Autowired
     private ImageService imageService;
 
+    //Show "Index"
     @GetMapping("/forum")
     public Collection<Forum> showForums() {
         return forumService.findAll();
     }
 
+    //Show Forum
     @PostMapping("/forum")
     public ResponseEntity<Forum> post_new_forum(@RequestBody Forum forum) {
 
@@ -45,6 +47,7 @@ public class ForumRestController {
         return ResponseEntity.created(location).body(forum);
     }
 
+    //Create
     @GetMapping("/forum/{id}")
     public ResponseEntity<Forum> showPost( @PathVariable long id) {
         Forum forum = forumService.findById(id);
@@ -54,16 +57,6 @@ public class ForumRestController {
         }else{
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @PostMapping("/forum/{id}/comments")
-    public ResponseEntity<Forum> create_comment(@RequestBody Forum forum){
-
-        forumService.save(forum);
-
-        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(forum.getId()).toUri();
-
-        return ResponseEntity.created(location).body(forum);
     }
 
     // Update
@@ -82,6 +75,17 @@ public class ForumRestController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    //Add comment
+    @PostMapping("/forum/{id}/comments")
+    public ResponseEntity<Forum> create_comment(@RequestBody Forum forum){
+
+        forumService.save(forum);
+
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(forum.getId()).toUri();
+
+        return ResponseEntity.created(location).body(forum);
+    }
     //Download File to user
     @PostMapping("forum/{id}/image")
     public ResponseEntity<Object> uploadImage(@PathVariable long id, @RequestParam MultipartFile imageFile)
@@ -96,7 +100,7 @@ public class ForumRestController {
             forum.setImageName(location.toString());
             forumService.save(forum);
 
-            imageService.saveImage(POSTS_FOLDER, forum.getId(), imageFile, forum.getImageName());
+            imageService.saveImage(POSTS_FOLDER, imageFile, forum.getImageName());
 
             return ResponseEntity.created(location).build();
 

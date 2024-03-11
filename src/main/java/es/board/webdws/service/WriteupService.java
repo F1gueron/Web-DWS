@@ -22,9 +22,6 @@ public class WriteupService {
 
     public WriteupService() {}
 
-    public Collection<Writeup> findAll() {
-        return this.writeup.values();
-    }
     public Collection<Writeup> findByCategory(String category) {
         List <Writeup> res = new ArrayList<>();
         for (Map.Entry<Long, Writeup> entry : writeup.entrySet()) {

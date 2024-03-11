@@ -33,8 +33,9 @@
         <a href="/forum/{{forum.id}}/file?download=true">Download file</a>
     </div>
 {{/file}}
-
-<a class="delete-forum" href="/forum/{{forum.id}}/delete">Delete forum</a>
+{{#admin}}
+    <a class="delete-forum" href="/forum/{{forum.id}}/delete">Delete forum</a>
+{{/admin}}
 <a href="/">Home</a>
 <br>
 <br>

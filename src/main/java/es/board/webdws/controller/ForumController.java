@@ -158,11 +158,11 @@ public class ForumController {
         String final_image = handleFile(image);
 
         if (final_file != null){
-            fileService.saveFile(POSTS_FOLDER, forum.getId(), file, final_file);
+            fileService.saveFile(POSTS_FOLDER, file, final_file);
             forum.setFileName(final_file);
         }
         if (final_image != null) {
-            imageService.saveImage(POSTS_FOLDER, forum.getId(), image, final_image);
+            imageService.saveImage(POSTS_FOLDER, image, final_image);
             forum.setImageName(final_image);
         }
 

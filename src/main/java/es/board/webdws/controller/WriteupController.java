@@ -39,7 +39,26 @@ public class WriteupController {
     @Autowired
     private FileService fileService;
 
+    //Show writeup "index"
+    @GetMapping("/writeup")
+    public String listWriteups(@RequestParam String category, Model model) {
+        model.addAttribute("writeups", writeupService.findByCategory(category));
+        model.addAttribute("category", category);
+        return "writeup";
+    }
 
+    //Show writeup
+    @GetMapping("/writeup/{id}")
+    public String showWriteup(Model model, @PathVariable long id) {
+
+        Writeup writeup = writeupService.findById(id);
+        model.addAttribute("image", !writeup.getImageName().isEmpty());
+        model.addAttribute("file", !writeup.getFileName().isEmpty());
+        model.addAttribute("writeup", writeup);
+
+
+        return "show_writeup";
+    }
     // Create Writeup
     @GetMapping("/writeup/new")
     public String newWriteup(Model model) {
@@ -77,9 +96,7 @@ public class WriteupController {
                               @RequestParam("text") String text,
                               @RequestParam(value = "date", required = false) LocalDate date,
                               @RequestParam(value = "id") Long id){
-        System.out.println("hola"+ id);
         Writeup writeup = writeupService.findById(id);
-        System.out.println("prueba");
         writeup.setAuthor(author);
         writeup.setTitle(title);
         writeup.setText(text);
@@ -114,26 +131,6 @@ public class WriteupController {
         return imageService.createResponseFromImage(POSTS_FOLDER, writeup.getImageName());
     }
 
-    //Show writeup "index"
-    @GetMapping("/writeup")
-    public String listWriteups(@RequestParam String category, Model model) {
-        model.addAttribute("writeups", writeupService.findByCategory(category));
-        model.addAttribute("category", category);
-        return "writeup";
-    }
-
-    //Show writeup
-    @GetMapping("/writeup/{id}")
-    public String showWriteup(Model model, @PathVariable long id) {
-
-        Writeup writeup = writeupService.findById(id);
-        model.addAttribute("image", !writeup.getImageName().isEmpty());
-        model.addAttribute("file", !writeup.getFileName().isEmpty());
-        model.addAttribute("writeup", writeup);
-
-
-        return "show_writeup";
-    }
 
     //Save files
     private String file_to_UUID (MultipartFile file){
@@ -174,11 +171,11 @@ public class WriteupController {
         String final_image = handleFile(image);
 
         if (final_file != null){
-            fileService.saveFile(POSTS_FOLDER, writeup.getId(), file, final_file);
+            fileService.saveFile(POSTS_FOLDER, file, final_file);
             writeup.setFileName(final_file);
         }
         if (final_image != null) {
-            imageService.saveImage(POSTS_FOLDER, writeup.getId(), image, final_image);
+            imageService.saveImage(POSTS_FOLDER, image, final_image);
             writeup.setImageName(final_image);
         }
 

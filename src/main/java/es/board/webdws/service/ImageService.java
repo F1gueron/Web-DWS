@@ -32,7 +32,7 @@ public class ImageService {
 
      */
 
-    public void saveImage(String folderName, long imageId, MultipartFile image, String imageName) throws IOException {
+    public void saveImage(String folderName, MultipartFile image, String imageName) throws IOException {
 
         Path folder = FILES_FOLDER.resolve(folderName);
 

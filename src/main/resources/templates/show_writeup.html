@@ -36,8 +36,11 @@
         <p>No files attached to this writeup.</p>
     {{/file}}
     <hr>
+    {{#admin}}
     <a href="/writeup/{{writeup.id}}/delete">Delete writeup</a>
+    <br>
     <a href="/writeup/{{writeup.id}}/edit">Edit writeup</a>
+    {{/admin}}
     <br>
     <br>
 

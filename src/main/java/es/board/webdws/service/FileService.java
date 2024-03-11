@@ -22,7 +22,7 @@ public class FileService {
         return folder.resolve(fileName);
     }
 
-    public void saveFile(String folderName, long fileId, MultipartFile file, String fileName) throws IOException{
+    public void saveFile(String folderName,  MultipartFile file, String fileName) throws IOException{
 
         Path folder = FILES_FOLDER.resolve(folderName);
 
@@ -32,7 +32,7 @@ public class FileService {
         file.transferTo(newFile);
     }
 
-    // not used, should we delete it?
+
     public void deleteFile(String folderName, String fileName) throws IOException {
 
         Path folder = FILES_FOLDER.resolve(folderName);

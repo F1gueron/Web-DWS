@@ -39,6 +39,20 @@ public class WriteupRestController {
     public Collection<Writeup> listWriteups(@RequestParam String category) {
         return writeupService.findByCategory(category);
     }
+
+    //Show writeup
+    @GetMapping("/writeup/{id}")
+    public ResponseEntity<Writeup> showWriteup( @PathVariable long id) {
+        Writeup writeup = writeupService.findById(id);
+
+        if (writeup != null){
+            return ResponseEntity.ok(writeup);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    //Create
     @PostMapping("/writeup")
     public ResponseEntity<Writeup> post_new_Writeup(@RequestBody Writeup writeup) {
 
@@ -49,19 +63,9 @@ public class WriteupRestController {
         return ResponseEntity.created(location).body(writeup);
     }
 
-    @GetMapping("/writeup/{id}")
-    public ResponseEntity<Writeup> showPost( @PathVariable long id) {
-        Writeup writeup = writeupService.findById(id);
-
-        if (writeup != null){
-            return ResponseEntity.ok(writeup);
-        }else{
-            return ResponseEntity.notFound().build();
-        }
-    }
-    // Update
+    //Update
     @PutMapping("writeup/{id}")
-    public ResponseEntity<Writeup> replacePost(@PathVariable long id, @RequestBody Writeup newWriteup) {
+    public ResponseEntity<Writeup> replaceWriteup(@PathVariable long id, @RequestBody Writeup newWriteup) {
 
         Writeup writeup = writeupService.findById(id);
 
@@ -76,6 +80,7 @@ public class WriteupRestController {
         }
     }
 
+    //Delete
     @DeleteMapping("/writeup/{id}")
     public ResponseEntity<Writeup> deleteWriteup
             (@PathVariable long id) throws IOException {
@@ -94,8 +99,8 @@ public class WriteupRestController {
             return ResponseEntity.notFound().build();
         }
     }
-    //Download File to user
 
+    //Download File to user
     @PostMapping("writeup/{id}/image")
     public ResponseEntity<Object> uploadImage(@PathVariable long id, @RequestParam MultipartFile imageFile)
             throws IOException {
@@ -109,7 +114,7 @@ public class WriteupRestController {
             writeup.setImageName(location.toString());
             writeupService.save(writeup);
 
-            imageService.saveImage(POSTS_FOLDER, writeup.getId(), imageFile, writeup.getImageName());
+            imageService.saveImage(POSTS_FOLDER,  imageFile, writeup.getImageName());
 
             return ResponseEntity.created(location).build();
 
@@ -131,7 +136,7 @@ public class WriteupRestController {
             writeup.setFileName(location.toString());
             writeupService.save(writeup);
 
-            fileService.saveFile(POSTS_FOLDER, writeup.getId(), file, writeup.getImageName());
+            fileService.saveFile(POSTS_FOLDER, file, writeup.getImageName());
 
             return ResponseEntity.created(location).build();
 

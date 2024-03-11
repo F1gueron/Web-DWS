@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -29,21 +28,6 @@ public class EventController {
 
     @Autowired
     private ImageService imageService;
-
-    @GetMapping("/event/new")
-    public String newEvent(Model model) {
-
-        model.addAttribute("author", authorSession.getAuthor());
-
-        return "creation_pages/new_event";
-    }
-
-    @PostMapping("/event/new")
-    public String newEvents( Model model, Event event, MultipartFile image) throws IOException {
-
-
-        return uploadData(model, event, image);
-    }
 
     //Show event "index"
     @GetMapping("/event")
@@ -62,6 +46,21 @@ public class EventController {
         model.addAttribute("event", event);
 
         return "show_event";
+    }
+
+    @GetMapping("/event/new")
+    public String newEvent(Model model) {
+
+        model.addAttribute("author", authorSession.getAuthor());
+
+        return "creation_pages/new_event";
+    }
+
+    @PostMapping("/event/new")
+    public String newEvents( Model model, Event event, MultipartFile image) throws IOException {
+
+
+        return uploadData(model, event, image);
     }
 
     //Delete Event
@@ -115,7 +114,7 @@ public class EventController {
         String final_image = handleFile(image);
 
         if (final_image != null) {
-            imageService.saveImage(POSTS_FOLDER, event.getId(), image, final_image);
+            imageService.saveImage(POSTS_FOLDER, image, final_image);
             event.setImageName(final_image);
         }
 

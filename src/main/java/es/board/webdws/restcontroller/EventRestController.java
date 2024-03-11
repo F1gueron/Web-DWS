@@ -39,20 +39,6 @@ public class EventRestController {
         return eventService.findAll();
     }
 
-
-    @PostMapping("/event")
-    public ResponseEntity<Event> newEvents(@RequestBody Event event) throws IOException {
-
-
-        eventService.save(event);
-
-        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
-
-        return ResponseEntity.created(location).body(event);
-    }
-
-
-
     //Show Event
     @GetMapping("/event/{id}")
     public ResponseEntity<Event> showPost( @PathVariable long id) {
@@ -64,6 +50,19 @@ public class EventRestController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    //Create
+    @PostMapping("/event")
+    public ResponseEntity<Event> newEvents(@RequestBody Event event) throws IOException {
+
+
+        eventService.save(event);
+
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
+
+        return ResponseEntity.created(location).body(event);
+    }
+
 
     //Delete Event
     @DeleteMapping("/event/{id}")

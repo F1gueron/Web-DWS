@@ -5,33 +5,37 @@
     <title>CyberSecLabs</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/fake/styles.css">
+    <link rel="stylesheet" href="/styles/common.css">
+    <link rel="stylesheet" href="/styles/forum_landing.css">
 </head>
 <body>
 <header>
-    <div class="logo-container"><img class="logo" src="/static/images/logo4.jpg" alt="logo"><span>CyberSecLabs</span></div>
+    <h1 class="logo-title"><a href="/">CyberSecLabs Community Forum</a></h1>
     <nav>
         <ul class="nav-links">
-            <li><a href="/">Writeups</a></li>
-            <!--<li><a href="/posts">Forum</a></li>
-            <li><a href="/todo">Events</a></li>-->
+            <li><a href="/">Home</a></li>
+            <li><a class="cta" href="/login">Login</a></li>
+            <li><a class="cta" href="/forum">Forum</a></li>
         </ul>
     </nav>
-    <a class="cta" href="/login"><button>Login</button></a>
 </header>
 <hr>
 
-<h1>Event</h1>
-
-{{#events}}
-<a href="event/{{id}}">{{title}} by {{author}}</a><br>
-{{/events}}
-
+<h2>Welcome to our event section! Here you can see in which events we are going to participate and create writeups in the future. If you want to get any writeups from a specific event, request it at the forums!!</h2>
+<h2>If you want to get any writeups from a specific event, request it <a href="forum/new">here!!</a></h2>
+{{#admin}}
+    <a href="event/new">New Event</a>
+{{/admin}}
+<ul class="forum-nav-links">
+    {{#events}}
+    <li class="post-link"><a href="event/{{id}}">{{title}} by <span style="font-weight: bold">{{author}}</span></a><br></li>
+    {{/events}}
+</ul>
 {{^events}}
-<p>No posts yet.</p>
+<p>No Events yet.</p>
 {{/events}}
 
 <br>
-<a href="event/new">New Event</a>
+
 </body>
 </html>
