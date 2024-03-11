@@ -126,7 +126,7 @@ public class ForumController {
 
         forumService.deleteById(id);
 
-        imageService.deleteImage(POSTS_FOLDER, forum.getImageName()); //TODO
+        imageService.deleteImage(POSTS_FOLDER, forum.getImageName());
         fileService.deleteFile(POSTS_FOLDER, forum.getFileName());
 
         return "deleted_forum";
