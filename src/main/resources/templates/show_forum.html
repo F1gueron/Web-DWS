@@ -23,7 +23,7 @@
     <p class="forum-text">{{forum.text}}</p>
 </div>
 {{#image}}
-    <img src="/forum/{{forum.id}}/image"> <!-- Use for background, etc -->
+    <img src="/forum/{{forum.id}}/image" style="max-width: 60%;">
 {{/image}}
 
 
@@ -33,8 +33,7 @@
         <a href="/forum/{{forum.id}}/file?download=true">Download file</a>
     </div>
 {{/file}}
-
-<a class="delete-forum" href="/forum/{{forum.id}}/delete">Delete forum</a>
+    <a class="delete-forum" href="/forum/{{forum.id}}/delete">Delete forum</a>
 <a href="/">Home</a>
 <br>
 <br>

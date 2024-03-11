@@ -1,63 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-    body{
-        margin-left: 15px;
-        background-image: url(/images/keyboard_bg.jpg);
-        background-position: center;
-        color: white;
-        font-family: "Montserrat", sans-serif;
-    }
-</style>
-
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{event.title}}</title>
+    <link rel="stylesheet" href="/styles/common.css">
+    <link rel="stylesheet" href="/styles/show_forum.css">
+</head>
 <body>
-<p>Author: {{event.author}}</p>
-<p>Title: {{event.title}}</p>
+<div class="forum-header">
+    <h1>{{event.title}}</h1>
 
-{{#event.date}}
-<p>Date: {{event.date}}</p>
-{{/event.date}}
+    {{#event.date}}
+        <p>{{event.author}} | {{event.date}}</p>
+    {{/event.date}}
 
-{{^event.date}}
-<p>This event has no date assigned.</p>
-{{/event.date}}
-
-<p>Text: {{event.text}}</p>
-
+    {{^event.date}}
+        <p>{{event.author}}</p>
+    {{/event.date}}
+</div>
+<hr>
+<div class="forum-text-container">
+    <p class="forum-text">{{event.text}}</p>
+</div>
 {{#image}}
-<img src="/event/{{event.id}}/image"> <!-- Use for background, etc -->
-{{/image}}
-
-{{^image}}
-<p>No images found for this event.</p>
+    <img src="/event/{{event.id}}/image" style="max-width: 60%;">
 {{/image}}
 
 
-<hr>
-<a href="/event/{{event.id}}/delete">Delete event</a>
+    <a class="delete-event" href="/event/{{event.id}}/delete">Delete event</a>
+<a href="/">Home</a>
 <br>
 <br>
-
-{{#participants}}
-<ul>
-    <li>{{participants}}</li>
-</ul>
-{{/participants}}
-
-{{^participants}}
-<p>No participants</p>
-{{/participants}}
-
-<hr>
-<h2>Event Participation</h2>
-
-<form id="/event/{{event.id}}/user" method="post" enctype="multipart/form-data">
-    <label>Your Name:</label>
-    <input type="text" name="name" required>
-    <button type="submit" value="save">Participate</button>
-</form>
-
-<a href="/">Back</a>
 </body>
 </html>

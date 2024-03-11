@@ -37,6 +37,33 @@
 <a class="delete-writeup" href="/writeup/{{writeup.id}}/delete">Delete writeup</a>
 <a href="/">Home</a>
 
+
+    <p>Text: {{writeup.text}}</p>
+
+    {{#image}}
+        <img src="/writeup/{{writeup.id}}/image" style="max-width: 60%;">
+    {{/image}}
+
+    {{^image}}
+        <p>No images found for this writeup.</p>
+    {{/image}}
+
+    {{#file}}
+        <div class="inline-container">
+            <p>Download link:</p>
+            <a href="/writeup/{{writeup.id}}/file?download=true">Download file</a>
+        </div>
+    {{/file}}
+
+    {{^file}}
+        <p>No files attached to this writeup.</p>
+    {{/file}}
+    <hr>
+    <a href="/writeup/{{writeup.id}}/delete">Delete writeup</a>
+
+    <br>
+    <a href="/writeup/{{writeup.id}}/edit">Edit writeup</a>
+
     <br>
     <br>
 

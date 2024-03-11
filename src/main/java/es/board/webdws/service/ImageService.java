@@ -32,7 +32,7 @@ public class ImageService {
 
      */
 
-    public void saveImage(String folderName, long imageId, MultipartFile image, String imageName) throws IOException {
+    public void saveImage(String folderName, MultipartFile image, String imageName) throws IOException {
 
         Path folder = FILES_FOLDER.resolve(folderName);
 
@@ -55,14 +55,18 @@ public class ImageService {
 
         Path folder = FILES_FOLDER.resolve(folderName);
 
+
         Path imagePath = createFilePath(folder, fileName);
 
         Resource file = new UrlResource(imagePath.toUri());
 
+
         if(!Files.exists(imagePath)) {
+
             return ResponseEntity.notFound().build();
         } else {
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(file);
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "jpeg/image").body(file);
         }
     }
 

@@ -15,6 +15,8 @@ public class Forum {
 
     private String category = null;
 
+    private List<Comment> comments = new ArrayList<>();
+
     public String getCategory() {
         return category;
     }
@@ -22,8 +24,6 @@ public class Forum {
     public void setCategory(String category) {
         this.category = category;
     }
-
-    private List<Comment> comments = new ArrayList<>();
 
     public List<Comment> getComments() {
         return comments;
@@ -71,6 +71,24 @@ public class Forum {
         this.title = title;
         this.text = text;
         this.date = date;
+    }
+    public Forum(String author, String title, String text, LocalDate date, List<Comment> comment, String imageName) {
+        super();
+        this.author = author;
+        this.title = title;
+        this.text = text;
+        this.date = date;
+        addComment((Comment) comment);
+        this.imageName = imageName;
+    }
+    public Forum(String author, String title, String text, LocalDate date, List<Comment> comment) {
+        super();
+        this.author = author;
+        this.title = title;
+        this.text = text;
+        this.date = date;
+        addComment((Comment) comment);
+
     }
 
     public Forum(String author, String title, String text) {

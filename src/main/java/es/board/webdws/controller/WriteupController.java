@@ -2,6 +2,7 @@ package es.board.webdws.controller;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.time.LocalDate;
 import java.util.UUID;
 
 
@@ -38,52 +39,6 @@ public class WriteupController {
     @Autowired
     private FileService fileService;
 
-
-
-    // Create Writeup
-    @GetMapping("/writeup/new")
-    public String newWriteup(Model model) {
-
-        model.addAttribute("author", authorSession.getAuthor());
-
-        return "creation_pages/new_writeup";
-    }
-
-    @PostMapping("/new")
-    public String newWriteup(@RequestParam("Category") String category, Model model, Writeup writeup, MultipartFile image, MultipartFile file) throws IOException {
-
-        writeup.setCategory(category);
-
-        return uploadData(model, writeup, image, file);
-    }
-
-    //Delete Writeup
-    @GetMapping("/writeup/{id}/delete")
-    public String deleteWriteup(Writeup writeup, @PathVariable long id) throws IOException {
-
-        writeupService.deleteById(id);
-
-        imageService.deleteImage(POSTS_FOLDER, writeup.getImageName());
-        fileService.deleteFile(POSTS_FOLDER, writeup.getFileName());
-
-        return "deleted_writeup";
-    }
-
-    //Download File to user
-    @GetMapping("/writeup/{id}/file")
-    public ResponseEntity<Object> downloadFile(@PathVariable long id, @RequestParam(required = false) boolean download) throws MalformedURLException {
-        Writeup writeup = writeupService.findById(id);
-        return fileService.createResponseFromFile(POSTS_FOLDER, writeup.getFileName(), download);
-    }
-
-    @GetMapping("/writeup/{id}/image")
-    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws MalformedURLException {
-
-        Writeup writeup = writeupService.findById(id);
-
-        return imageService.createResponseFromImage(POSTS_FOLDER, writeup.getImageName());
-    }
-
     //Show writeup "index"
     @GetMapping("/writeup")
     public String listWriteups(@RequestParam String category, Model model) {
@@ -104,6 +59,78 @@ public class WriteupController {
 
         return "show_writeup";
     }
+    // Create Writeup
+    @GetMapping("/writeup/new")
+    public String newWriteup(Model model) {
+
+        model.addAttribute("author", authorSession.getAuthor());
+
+        return "creation_pages/new_writeup";
+    }
+
+    @PostMapping("/new")
+    public String newWriteup(@RequestParam("Category") String category, Model model, Writeup writeup, MultipartFile image, MultipartFile file) throws IOException {
+
+        writeup.setCategory(category);
+
+        return uploadData(model, writeup, image, file);
+    }
+
+    //Edit writeup
+
+    @GetMapping("/writeup/{id}/edit")
+    public String getEditWriteup(Model model, @PathVariable Long id){
+        Writeup writeup = writeupService.findById(id);
+
+        model.addAttribute("id", writeup.getId());
+        model.addAttribute("author", writeup.getAuthor());
+        model.addAttribute("title", writeup.getTitle());
+        model.addAttribute("text", writeup.getText());
+        model.addAttribute("date", writeup.getDate());
+
+        return "creation_pages/new_writeup";
+    }
+    @PostMapping("/edit")
+    public String editWriteup(@RequestParam("author") String author,
+                              @RequestParam("title") String title,
+                              @RequestParam("text") String text,
+                              @RequestParam(value = "date", required = false) LocalDate date,
+                              @RequestParam(value = "id") Long id){
+        Writeup writeup = writeupService.findById(id);
+        writeup.setAuthor(author);
+        writeup.setTitle(title);
+        writeup.setText(text);
+        writeup.setDate(date);
+        return "saved_writeup";
+    }
+
+    //Delete Writeup
+    @GetMapping("/writeup/{id}/delete")
+    public String deleteWriteup(Writeup writeup, @PathVariable long id) throws IOException {
+
+        writeupService.deleteById(id);
+
+        imageService.deleteImage(POSTS_FOLDER, writeup.getImageName()); //TODO
+        fileService.deleteFile(POSTS_FOLDER, writeup.getFileName());
+
+        return "deleted_writeup";
+    }
+
+    //Download File to user
+    @GetMapping("/writeup/{id}/file")
+    public ResponseEntity<Object> downloadFile(@PathVariable long id, @RequestParam(required = false) boolean download) throws MalformedURLException {
+        Writeup writeup = writeupService.findById(id);
+        return fileService.createResponseFromFile(POSTS_FOLDER, writeup.getFileName(), download);
+    }
+
+    @GetMapping("/writeup/{id}/image")
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws MalformedURLException {
+
+        Writeup writeup = writeupService.findById(id);
+
+        return imageService.createResponseFromImage(POSTS_FOLDER, writeup.getImageName());
+    }
+
 
     //Save files
     private String file_to_UUID (MultipartFile file){
@@ -144,11 +171,11 @@ public class WriteupController {
         String final_image = handleFile(image);
 
         if (final_file != null){
-            fileService.saveFile(POSTS_FOLDER, writeup.getId(), file, final_file);
+            fileService.saveFile(POSTS_FOLDER, file, final_file);
             writeup.setFileName(final_file);
         }
         if (final_image != null) {
-            imageService.saveImage(POSTS_FOLDER, writeup.getId(), image, final_image);
+            imageService.saveImage(POSTS_FOLDER, image, final_image);
             writeup.setImageName(final_image);
         }
 

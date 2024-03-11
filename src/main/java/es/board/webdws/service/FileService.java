@@ -22,7 +22,7 @@ public class FileService {
         return folder.resolve(fileName);
     }
 
-    public void saveFile(String folderName, long fileId, MultipartFile file, String fileName) throws IOException{
+    public void saveFile(String folderName,  MultipartFile file, String fileName) throws IOException{
 
         Path folder = FILES_FOLDER.resolve(folderName);
 
@@ -32,7 +32,7 @@ public class FileService {
         file.transferTo(newFile);
     }
 
-    // not used, should we delete it?
+
     public void deleteFile(String folderName, String fileName) throws IOException {
 
         Path folder = FILES_FOLDER.resolve(folderName);
@@ -55,7 +55,7 @@ public class FileService {
             if(download){
                 return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
             }else{
-                return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(file);
+                return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "zip/rar/pdf/txt/7z").body(file);
             }
         }
     }

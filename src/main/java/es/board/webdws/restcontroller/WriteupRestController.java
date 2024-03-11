@@ -39,18 +39,10 @@ public class WriteupRestController {
     public Collection<Writeup> listWriteups(@RequestParam String category) {
         return writeupService.findByCategory(category);
     }
-    @PostMapping("/writeup/new")
-    public ResponseEntity<Writeup> post_new_forum(@RequestBody Writeup writeup) {
 
-        writeupService.save(writeup);
-
-        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(writeup.getId()).toUri();
-
-        return ResponseEntity.created(location).body(writeup);
-    }
-
+    //Show writeup
     @GetMapping("/writeup/{id}")
-    public ResponseEntity<Writeup> showPost( @PathVariable long id) {
+    public ResponseEntity<Writeup> showWriteup( @PathVariable long id) {
         Writeup writeup = writeupService.findById(id);
 
         if (writeup != null){
@@ -59,16 +51,28 @@ public class WriteupRestController {
             return ResponseEntity.notFound().build();
         }
     }
-    // Update
+
+    //Create
+    @PostMapping("/writeup")
+    public ResponseEntity<Writeup> post_new_Writeup(@RequestBody Writeup writeup) {
+
+        writeupService.save(writeup);
+
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(writeup.getId()).toUri();
+
+        return ResponseEntity.created(location).body(writeup);
+    }
+
+    //Update
     @PutMapping("writeup/{id}")
-    public ResponseEntity<Writeup> replacePost(@PathVariable long id, @RequestBody Writeup newWriteup) {
+    public ResponseEntity<Writeup> replaceWriteup(@PathVariable long id, @RequestBody Writeup newWriteup) {
 
         Writeup writeup = writeupService.findById(id);
 
         if (writeup != null) {
 
             newWriteup.setId(id);
-            writeupService.save(writeup);
+            writeupService.edit(newWriteup);
 
             return ResponseEntity.ok(writeup);
         } else {
@@ -76,18 +80,27 @@ public class WriteupRestController {
         }
     }
 
-    @GetMapping("/writeup/{id}/delete")
-    public String deleteWriteup(Writeup writeup, @PathVariable long id) throws IOException {
+    //Delete
+    @DeleteMapping("/writeup/{id}")
+    public ResponseEntity<Writeup> deleteWriteup
+            (@PathVariable long id) throws IOException {
 
-        writeupService.deleteById(id);
+        Writeup writeup = writeupService.findById(id);
 
-        imageService.deleteImage(POSTS_FOLDER, writeup.getImageName());
-        fileService.deleteFile(POSTS_FOLDER, writeup.getFileName());
+        if (writeup != null) {
+            writeupService.deleteById(id);
 
-        return "deleted_writeup";
+            if(!writeup.getImageName().equals("")) { //TODO
+                this.imageService.deleteImage(POSTS_FOLDER, writeup.getImageName());
+            }
+
+            return ResponseEntity.ok(writeup);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-    //Download File to user
 
+    //Download File to user
     @PostMapping("writeup/{id}/image")
     public ResponseEntity<Object> uploadImage(@PathVariable long id, @RequestParam MultipartFile imageFile)
             throws IOException {
@@ -101,7 +114,7 @@ public class WriteupRestController {
             writeup.setImageName(location.toString());
             writeupService.save(writeup);
 
-            imageService.saveImage(POSTS_FOLDER, writeup.getId(), imageFile, writeup.getImageName());
+            imageService.saveImage(POSTS_FOLDER,  imageFile, writeup.getImageName());
 
             return ResponseEntity.created(location).build();
 
@@ -123,7 +136,7 @@ public class WriteupRestController {
             writeup.setFileName(location.toString());
             writeupService.save(writeup);
 
-            fileService.saveFile(POSTS_FOLDER, writeup.getId(), file, writeup.getImageName());
+            fileService.saveFile(POSTS_FOLDER, file, writeup.getImageName());
 
             return ResponseEntity.created(location).build();
 
