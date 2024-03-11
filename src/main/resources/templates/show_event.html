@@ -23,12 +23,11 @@
     <p class="forum-text">{{event.text}}</p>
 </div>
 {{#image}}
-    <img src="/event/{{event.id}}/image"> <!-- Use for background, etc -->
+    <img src="/event/{{event.id}}/image" style="max-width: 60%;">
 {{/image}}
 
-{{#admin}}
+
     <a class="delete-event" href="/event/{{event.id}}/delete">Delete event</a>
-{{/admin}}
 <a href="/">Home</a>
 <br>
 <br>

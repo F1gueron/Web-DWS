@@ -18,7 +18,7 @@
     <p>Text: {{writeup.text}}</p>
 
     {{#image}}
-        <img src="/writeup/{{writeup.id}}/image"> <!-- Use for background, etc -->
+        <img src="/writeup/{{writeup.id}}/image" style="max-width: 60%;">
     {{/image}}
 
     {{^image}}
@@ -36,11 +36,10 @@
         <p>No files attached to this writeup.</p>
     {{/file}}
     <hr>
-    {{#admin}}
     <a href="/writeup/{{writeup.id}}/delete">Delete writeup</a>
     <br>
     <a href="/writeup/{{writeup.id}}/edit">Edit writeup</a>
-    {{/admin}}
+
     <br>
     <br>
 

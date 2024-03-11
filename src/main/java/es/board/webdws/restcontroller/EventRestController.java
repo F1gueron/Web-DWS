@@ -71,7 +71,7 @@ public class EventRestController {
             eventService.deleteById(id);
 
 
-            if(!event.getImageName().equals("") ) { //TODO
+            if(!event.getImageName().isEmpty()) {
                 this.imageService.deleteImage(POSTS_FOLDER, event.getImageName());
             }
 

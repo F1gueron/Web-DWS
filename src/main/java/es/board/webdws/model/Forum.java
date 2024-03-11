@@ -72,6 +72,24 @@ public class Forum {
         this.text = text;
         this.date = date;
     }
+    public Forum(String author, String title, String text, LocalDate date, List<Comment> comment, String imageName) {
+        super();
+        this.author = author;
+        this.title = title;
+        this.text = text;
+        this.date = date;
+        addComment((Comment) comment);
+        this.imageName = imageName;
+    }
+    public Forum(String author, String title, String text, LocalDate date, List<Comment> comment) {
+        super();
+        this.author = author;
+        this.title = title;
+        this.text = text;
+        this.date = date;
+        addComment((Comment) comment);
+
+    }
 
     public Forum(String author, String title, String text) {
         super();

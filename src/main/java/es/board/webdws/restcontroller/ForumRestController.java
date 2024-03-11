@@ -86,7 +86,7 @@ public class ForumRestController {
         if (forum != null) {
             forumService.deleteById(id);
 
-            if(!forum.getImageName().equals("")) { //TODO
+            if(!forum.getImageName().isEmpty()) {
                 this.imageService.deleteImage(POSTS_FOLDER, forum.getImageName());
             }
 

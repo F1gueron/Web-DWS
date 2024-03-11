@@ -15,8 +15,9 @@ public class EventService {
     private AtomicLong nextId = new AtomicLong();
 
     public EventService() {
-        save(new Event("Event1", "Hackon 23", "Here we are going to upload some writeups and we are going to answer any question that you ask to solve any challenges", LocalDate.of(2023, 2, 17)));
-        save(new Event("Event2", "Hackon 24", "This is gonna be a post dedicated to questions and solves of the 2024 Hackon CTF", LocalDate.of(2024, 2, 19)));
+        save(new Event("Figueron", "Hackon 25", "The CTF when we acted started as a team", LocalDate.of(2023, 2, 17), "HackOn Horizontal 2024 - dark.png"));
+        save(new Event("Lokete", "Cyberapocalipsys", "This is a CTF from the platform HTB", LocalDate.of(2024, 2, 19), "maxresdefault.jpg"));
+        save(new Event("Miguelin", "Rooted 25", "Rooted of 2025, event we have already participated 3 times already", LocalDate.of(2024, 2, 19), "logo-rootedcon.jpg"));
     }
 
     public Collection<Event> findAll() {

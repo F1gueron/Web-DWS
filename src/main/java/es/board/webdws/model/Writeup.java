@@ -60,6 +60,15 @@ public class Writeup {
 
     public Writeup(){}
 
+    public Writeup(String author, String title, String text, LocalDate date, String category, String fileName) {
+        super();
+        this.author = author;
+        this.title = title;
+        this.text = text;
+        this.date = date;
+        this.category = category;
+        this.fileName = fileName;
+    }
     public Writeup(String author, String title, String text, LocalDate date) {
         super();
         this.author = author;

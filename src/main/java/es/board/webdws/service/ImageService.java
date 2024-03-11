@@ -62,10 +62,10 @@ public class ImageService {
 
 
         if(!Files.exists(imagePath)) {
-            System.out.println("mama");
+
             return ResponseEntity.notFound().build();
         } else {
-            System.out.println("rula");
+
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "jpeg/image").body(file);
         }
     }

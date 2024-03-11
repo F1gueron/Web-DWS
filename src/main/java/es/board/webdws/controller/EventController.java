@@ -82,7 +82,7 @@ public class EventController {
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws MalformedURLException {
 
         Event event = eventService.findById(id);
-
+        System.out.println(event.getImageName());
         return imageService.createResponseFromImage(POSTS_FOLDER, event.getImageName());
     }
 

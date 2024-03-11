@@ -31,6 +31,14 @@ public class Event {
         this.title = title;
         this.text = text;
     }
+    public Event(String author, String title, String text, LocalDate date, String imageName) {
+        super();
+        this.author = author;
+        this.title = title;
+        this.text = text;
+        this.date = date;
+        this.imageName = imageName;
+    }
 
 
     public LocalDate getDate() {
