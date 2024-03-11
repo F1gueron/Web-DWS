@@ -7,8 +7,8 @@
 <body>
 <h1>New Writeup</h1>
 <hr>
+{{^id}}
 <form action="/new" method="post" enctype="multipart/form-data">
-    <p></p>
     <input placeholder="Author" type='text' name='author' value='{{#author}}{{.}}{{/author}}' required>
     <input placeholder="Challenge name" type='text' name='title' required>
     <p></p>
@@ -49,5 +49,21 @@
     <input type="date" name="date">
     <button class="submit-btn" type='submit' value='Save'>Save</button>
 </form>
+{{/id}}
+{{#id}}
+<form action="/edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="{{#id}}{{.}}{{/id}}">
+    <input placeholder="Author" type='text' name='author' value='{{#author}}{{.}}{{/author}}' required>
+    <input placeholder="Challenge name" type='text' name='title' value="{{#title}}{{.}}{{/title}}" required>
+    <p></p>
+    <textarea placeholder="Write your text here" name='text' rows=5 cols=40 required>{{#text}}{{.}}{{/text}}</textarea>
+    <br>
+    <br>
+
+    <p>Date: </p>
+    <input type="date" name="date">
+    <button class="submit-btn" type='submit' value='Edit'>Edit</button>
+</form>
+{{/id}}
 </body>
 </html>

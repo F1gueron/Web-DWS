@@ -2,6 +2,7 @@ package es.board.webdws.controller;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.time.LocalDate;
 import java.util.UUID;
 
 
@@ -39,7 +40,6 @@ public class WriteupController {
     private FileService fileService;
 
 
-
     // Create Writeup
     @GetMapping("/writeup/new")
     public String newWriteup(Model model) {
@@ -55,6 +55,36 @@ public class WriteupController {
         writeup.setCategory(category);
 
         return uploadData(model, writeup, image, file);
+    }
+
+    //Edit writeup
+
+    @GetMapping("/writeup/{id}/edit")
+    public String getEditWriteup(Model model, @PathVariable Long id){
+        Writeup writeup = writeupService.findById(id);
+
+        model.addAttribute("id", writeup.getId());
+        model.addAttribute("author", writeup.getAuthor());
+        model.addAttribute("title", writeup.getTitle());
+        model.addAttribute("text", writeup.getText());
+        model.addAttribute("date", writeup.getDate());
+
+        return "creation_pages/new_writeup";
+    }
+    @PostMapping("/edit")
+    public String editWriteup(@RequestParam("author") String author,
+                              @RequestParam("title") String title,
+                              @RequestParam("text") String text,
+                              @RequestParam(value = "date", required = false) LocalDate date,
+                              @RequestParam(value = "id") Long id){
+        System.out.println("hola"+ id);
+        Writeup writeup = writeupService.findById(id);
+        System.out.println("prueba");
+        writeup.setAuthor(author);
+        writeup.setTitle(title);
+        writeup.setText(text);
+        writeup.setDate(date);
+        return "saved_writeup";
     }
 
     //Delete Writeup
