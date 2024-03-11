@@ -14,8 +14,13 @@
     <nav>
         <ul class="nav-links">
             <li><a href="/">Home</a></li>
-            <li><a class="cta" href="/login">Login</a></li>
-            <li><a class="cta" href="/event">Events</a></li>
+
+            {{#admin}}
+                <li><a>Welcome, admin</a></li>
+            {{/admin}}
+            {{^admin}}
+                <li><a class="cta" href="/login">Login</a></li>
+            {{/admin}}
         </ul>
     </nav>
 </header>
