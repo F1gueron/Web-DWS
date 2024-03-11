@@ -48,15 +48,8 @@ public class ForumController {
         return "todo";
     }
 
-    //Redirect to log in
-    @GetMapping("/login")
-    public String login(){
-        return "../static/login";
-    }
-
     @GetMapping("/forum")
     public String showForums(Model model, HttpSession session) {
-
         model.addAttribute("forums", forumService.findAll());
         model.addAttribute("welcome", session.isNew());
 

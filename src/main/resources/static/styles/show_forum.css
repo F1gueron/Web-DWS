@@ -58,6 +58,8 @@ input::placeholder, textarea::placeholder {
     min-width: 50%;
     max-width: 50%;
     overflow-wrap: break-word;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 .comment-header {
@@ -74,6 +76,9 @@ input::placeholder, textarea::placeholder {
     display: flex;
     justify-content: center;
     line-height: 40px;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 .forum-header h1 {
