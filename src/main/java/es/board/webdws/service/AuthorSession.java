@@ -10,6 +10,7 @@ public class AuthorSession {
     private String author;
     private int numPosts;
     private int numWriteup;
+    private int numEvents;
 
     public void setAuthor(String author) {
         this.author = author;
@@ -32,5 +33,12 @@ public class AuthorSession {
 
     public void incNumWriteups() {
         this.numWriteup++;
+    }
+    public int getNumEvents() {
+        return this.numEvents;
+    }
+
+    public void incNumEvents() {
+        this.numEvents++;
     }
 }

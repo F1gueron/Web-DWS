@@ -13,6 +13,8 @@
     <label >Writeup</label><br>
     <input type="radio" name="element" value="discussion-forum">
     <label >Discussion forum</label><br>
+    <input type="radio" name="element" value="event">
+    <label >Event</label><br>
 </form>
 
 <br>
@@ -34,6 +36,9 @@
                 break;
             case 'discussion-forum':
                 window.location.href = '/forum/new';
+                break;
+            case 'event':
+                window.location.href = '/event/new';
                 break;
             default:
                 break;

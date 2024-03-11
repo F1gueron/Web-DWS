@@ -1,0 +1,37 @@
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>CyberSecLabs</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/fake/styles.css">
+</head>
+<body>
+<header>
+    <div class="logo-container"><img class="logo" src="/static/images/logo4.jpg" alt="logo"><span>CyberSecLabs</span></div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/">Writeups</a></li>
+            <!--<li><a href="/posts">Forum</a></li>
+            <li><a href="/todo">Events</a></li>-->
+        </ul>
+    </nav>
+    <a class="cta" href="/login"><button>Login</button></a>
+</header>
+<hr>
+
+<h1>Event</h1>
+
+{{#events}}
+<a href="event/{{id}}">{{title}} by {{author}}</a><br>
+{{/events}}
+
+{{^events}}
+<p>No posts yet.</p>
+{{/events}}
+
+<br>
+<a href="event/new">New Event</a>
+</body>
+</html>
