@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+body {
+    margin: 50px 100px;
+    background-image: url(../images/keyboard_bg.jpg);
+    background-position: center;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+
+.nav-links li {
+    margin: 20px;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header a {
+    text-decoration: none;
+    color: white;
+    padding: 5px 10px;
+    font-size: 25px;
+    transition: all 0.3s ease 0s;
+
+
+}
+
+header a:hover {
+    transition: all 0.3s ease 0s;
+    font-weight: bold;
+}
+
+.logo-title a{
+    font-size: 60px;
+    font-family: "Orbitron", sans-serif;
+    font-weight: bold;
+}
+
+
+.forum-nav-links {
+    list-style: none;
+    padding: 10px;
+}
+
+h2 a{
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+    color: white;
+    font-weight: bold;
+}
+
+h2 {
+    font-weight: 500;
+}
+
+h2 a:hover {
+    transition: all 0.3s ease 0s;
+    text-decoration: underline;
+
+
+}

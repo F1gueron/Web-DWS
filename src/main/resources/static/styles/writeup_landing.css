@@ -1,0 +1,61 @@
+
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+
+.nav-links li {
+    margin: 20px;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header a {
+    text-decoration: none;
+    color: white;
+    padding: 5px 10px;
+    font-size: 25px;
+    transition: all 0.3s ease 0s;
+
+
+}
+
+header a:hover {
+    transition: all 0.3s ease 0s;
+    font-weight: bold;
+}
+
+.logo-title a{
+    font-size: 60px;
+    font-family: "Orbitron", sans-serif;
+    font-weight: bold;
+}
+
+
+.forum-nav-links {
+    list-style: none;
+    padding: 10px;
+}
+
+h2 a{
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+    color: white;
+    font-weight: bold;
+}
+
+h2 {
+    font-weight: 500;
+}
+
+h2 a:hover {
+    transition: all 0.3s ease 0s;
+    text-decoration: underline;
+}

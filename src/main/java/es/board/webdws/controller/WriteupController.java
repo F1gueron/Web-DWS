@@ -15,13 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.board.webdws.model.Writeup;
+
 
 @Controller
 public class WriteupController {
@@ -40,11 +38,7 @@ public class WriteupController {
     @Autowired
     private FileService fileService;
 
-    @GetMapping("/")
-    public String landingPage() {
 
-        return "../static/index";
-    }
 
     // Create Writeup
     @GetMapping("/writeup/new")
@@ -55,32 +49,12 @@ public class WriteupController {
         return "creation_pages/new_writeup";
     }
 
-    @PostMapping("/writeup/new")
+    @PostMapping("/new")
     public String newWriteup(@RequestParam("Category") String category, Model model, Writeup writeup, MultipartFile image, MultipartFile file) throws IOException {
 
         writeup.setCategory(category);
 
         return uploadData(model, writeup, image, file);
-    }
-
-    //Show writeup "index"
-    @GetMapping("/writeup")
-    public String listWriteups(@RequestParam String category, Model model) {
-        model.addAttribute("writeups", writeupService.findByCategory(category));
-        return "writeup";
-    }
-
-    //Show writeup
-    @GetMapping("/writeup/{id}")
-    public String showWriteup(Model model, @PathVariable long id) {
-
-        Writeup writeup = writeupService.findById(id);
-        model.addAttribute("image", !writeup.getImageName().isEmpty());
-        model.addAttribute("file", !writeup.getFileName().isEmpty());
-        model.addAttribute("writeup", writeup);
-
-
-        return "show_writeup";
     }
 
     //Delete Writeup
@@ -110,16 +84,58 @@ public class WriteupController {
         return imageService.createResponseFromImage(POSTS_FOLDER, writeup.getImageName());
     }
 
+    //Show writeup "index"
+    @GetMapping("/writeup")
+    public String listWriteups(@RequestParam String category, Model model) {
+        model.addAttribute("writeups", writeupService.findByCategory(category));
+        model.addAttribute("category", category);
+        return "writeup";
+    }
+
+    //Show writeup
+    @GetMapping("/writeup/{id}")
+    public String showWriteup(Model model, @PathVariable long id) {
+
+        Writeup writeup = writeupService.findById(id);
+        model.addAttribute("image", !writeup.getImageName().isEmpty());
+        model.addAttribute("file", !writeup.getFileName().isEmpty());
+        model.addAttribute("writeup", writeup);
+
+
+        return "show_writeup";
+    }
+
     //Save files
+    private String file_to_UUID (MultipartFile file){
+        String new_fileName = UUID.randomUUID().toString();
+        String old_fileName = file.getOriginalFilename();
+        String fileExtension = get_file_extension(old_fileName); // handleFile checks if it is empty so this is never null.
+
+        return new_fileName + fileExtension;
+    }
+
     private String uploadData(Model model, Writeup writeup, MultipartFile image, MultipartFile file) throws IOException {
         uploadHandler(file, image, writeup);
         authorSession.setAuthor(writeup.getAuthor());
         authorSession.incNumWriteups();
 
         model.addAttribute("numWriteup", authorSession.getNumWriteups());
-        model.addAttribute("storageLocation", writeup.getCategory());
 
         return "saved_writeup";
+    }
+
+    private String get_file_extension(String filename){
+        return filename.substring(filename.lastIndexOf("."));
+    }
+
+
+    private String handleFile(MultipartFile file){
+        String new_filename = null;
+        if (!file.isEmpty()){
+            new_filename = file_to_UUID(file);
+        }
+
+        return new_filename;
     }
 
     private void uploadHandler(MultipartFile file, MultipartFile image, Writeup writeup) throws IOException {
@@ -138,27 +154,6 @@ public class WriteupController {
 
 
 
-    }
-
-    private String handleFile(MultipartFile file){
-        String new_filename = null;
-        if (!file.isEmpty()){
-            new_filename = file_to_UUID(file);
-        }
-
-        return new_filename;
-    }
-
-    private String file_to_UUID (MultipartFile file){
-        String new_fileName = UUID.randomUUID().toString();
-        String old_fileName = file.getOriginalFilename();
-        String fileExtension = get_file_extension(old_fileName); // handleFile checks if it is empty so this is never null.
-
-        return new_fileName + fileExtension;
-    }
-
-    private String get_file_extension(String filename){
-        return filename.substring(filename.lastIndexOf("."));
     }
 
 }

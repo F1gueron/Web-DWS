@@ -2,32 +2,32 @@
 <head>
     <meta charset="UTF-8"/>
     <title>CyberSec Blog</title>
+    <link href="/styles/common.css" rel="stylesheet">
 </head>
 <body>
-<h1>New Forum</h1>
-<form action="/forum/new" method="post" enctype="multipart/form-data">
-    <p>Author: </p>
-    <input type='text' name='author' value='{{#author}}{{.}}{{/author}}'/>
-    <p>Title:</p>
-    <input type='text' name='title'/>
-    <p>Text:</p>
-    <textarea name='text' rows=5 cols=40></textarea>
-    <p>Image file:</p>
-    <input type='file' name='image' accept=".jpg, .jpeg"/>
-    <p>Needed files for the forum.</p>
-
-    <input type="file" name="file" accept=".zip, .txt, .rar .7z, .pdf">
-    <p>Allowed formats:</p>
-    <ul>
-        <li>.zip</li>
-        <li>.txt</li>
-        <li>.rar</li>
-        <li>.7z</li>
-        <li>.pdf</li>
-    </ul>
-    <p>Date: </p>
-    <input type="date" name="date">
-    <input type='submit' value='Save'/>
-</form>
+    <h1>New Forum</h1>
+    <hr>
+    <form action="/forum/new" method="post" enctype="multipart/form-data">
+        <p></p>
+        <input placeholder="Author" type='text' name='author' value='{{#author}}{{.}}{{/author}}' required>
+        <input placeholder="Title of the post" type='text' name='title' required>
+        <p></p>
+        <textarea placeholder="What do you want to say?" name='text' rows=5 cols=40 required></textarea>
+        <p>Image file:</p>
+        <input type='file' name='image' accept=".jpg, .jpeg"/>
+        <br>
+        <input type="file" name="file" accept=".zip, .txt, .rar .7z, .pdf">
+        <p>Allowed formats:</p>
+        <ul>
+            <li>.zip</li>
+            <li>.txt</li>
+            <li>.rar</li>
+            <li>.7z</li>
+            <li>.pdf</li>
+        </ul>
+        <p>Date: </p>
+        <input type="date" name="date">
+        <button class="submit-btn" type='submit' value='Save'>Save</button>
+    </form>
 </body>
 </html>

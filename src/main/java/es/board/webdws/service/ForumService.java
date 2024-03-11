@@ -17,8 +17,8 @@ public class ForumService {
     private AtomicLong nextId = new AtomicLong();
 
     public ForumService() {
-        save(new Forum("Lokete", "Hackon 23", "Here we are going to upload some writeups and we are going to answer any question that you ask to solve any challenges",LocalDate.of(2023, 2, 17)));
-        save(new Forum("Figueron", "Hackon 24", "This is gonna be a post dedicated to questions and solves of the 2024 Hackon CTF", LocalDate.of(2024, 2, 19)));
+        save(new Forum("Lokete", "HackOn 2023 - URJC Cybersecurity Event - Discussion Forum", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",LocalDate.of(2023, 2, 17)));
+        save(new Forum("Figueron", "HackOn 2024 - CTF Q/A", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", LocalDate.of(2024, 2, 19)));
     }
 
     public Collection<Forum> findAll() {

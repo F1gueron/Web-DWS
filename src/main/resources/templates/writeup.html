@@ -5,29 +5,29 @@
     <title>CyberSecLabs</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/styles/common.css" rel="stylesheet">
+    <link href="/styles/writeup_landing.css" rel="stylesheet">
 <!--    <link rel="stylesheet" href="/styles.css">-->
 </head>
 <body>
 <header>
-    <div class="logo-container"><img class="logo" src="/images/logo4.jpg" alt="logo"><span>CyberSecLabs</span></div>
+    <h1 class="logo-title">Writeup Database</h1>
     <nav>
         <ul class="nav-links">
-            <li><a href="/forum">Forums</a></li>
-            <!--<li><a href="/posts">Forum</a></li>
-            <li><a href="/todo">Events</a></li>-->
+            <li><a href="/">Home</a></li>
+            <li><a class="cta" href="/login">Login</a></li>
         </ul>
     </nav>
-    <a class="cta" href="/login"><button>Login</button></a>
 </header>
 <hr>
 
-<h1>Writeups</h1>
+<p style="font-size: 20px; line-height: 1.5" class="writeup-subtitle">Welcome to our platform, dedicated to providing comprehensive write-ups on a diverse range of challenges within the {{category}} domain. Our repository offers in-depth analyses and solutions crafted by experts, designed to aid enthusiasts and professionals alike in tackling the complexities of {{category}}. Engage in meaningful discourse within our <a style="font-weight: bold;" href="/forum">forum</a> to delve deeper into these topics and exchange insights with fellow enthusiasts. Join us as we navigate the intricacies of {{category}}, striving for excellence and mastery.</p>
+<ul>
+    {{#writeups}}
+    <li><a href="/writeup/{{id}}"> {{author}} {{title}}</a></li>
+    {{/writeups}}
+</ul>
 
-{{#writeups}}
-<a href="/writeup/{{id}}"> {{author}} {{title}}</a>
-{{/writeups}}
-
-<br>
-<a href="writeup/new">New Writeup</a>
+<p>Create a <a href="writeup/new" style="font-weight: bold">new writeup</a>!</p>
 </body>
 </html>

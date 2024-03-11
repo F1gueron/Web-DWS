@@ -2,17 +2,19 @@
 <head>
     <meta charset="UTF-8"/>
     <title>CyberSec Blog</title>
+    <link href="/styles/common.css" rel="stylesheet">
 </head>
 <body>
 <h1>New Writeup</h1>
-<form action="/writeup/new" method="post" enctype="multipart/form-data">
-    <p>Author: </p>
-    <input type='text' name='author' value='{{#author}}{{.}}{{/author}}'/>
-    <p>Title:</p>
-    <input type='text' name='title'/>
-    <p>Text:</p>
-    <textarea name='text' rows=5 cols=40></textarea>
-    <h3>Category: </h3>
+<hr>
+<form action="/new" method="post" enctype="multipart/form-data">
+    <p></p>
+    <input placeholder="Author" type='text' name='author' value='{{#author}}{{.}}{{/author}}' required>
+    <input placeholder="Challenge name" type='text' name='title' required>
+    <p></p>
+    <textarea placeholder="Write your text here" name='text' rows=5 cols=40 required></textarea>
+    <br>
+    <br>
     <input type="radio" id="crypto" name="Category" value="crypto" required>
     <label for="crypto">Crypto</label><br>
 
@@ -33,8 +35,7 @@
 
     <p>Image file:</p>
     <input type='file' name='image' accept=".jpg, .jpeg"/>
-    <p>Needed files for the forum.</p>
-
+    <br>
     <input type="file" name="file" accept=".zip, .txt, .rar .7z, .pdf">
     <p>Allowed formats:</p>
     <ul>
@@ -46,7 +47,7 @@
     </ul>
     <p>Date: </p>
     <input type="date" name="date">
-    <input type='submit' value='Save'/>
+    <button class="submit-btn" type='submit' value='Save'>Save</button>
 </form>
 </body>
 </html>

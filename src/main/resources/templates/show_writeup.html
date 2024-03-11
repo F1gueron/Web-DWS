@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <link href="/styles/common.css" rel="stylesheet">
+</head>
 <body>
-<p>Author: {{writeup.author}}</p>
-<p>Title: {{writeup.title}}</p>
+    <p>Author: {{writeup.author}}</p>
+    <p>Title: {{writeup.title}}</p>
 
-{{#writeup.date}}
-    <p>Date: {{writeup.date}}</p>
-{{/writeup.date}}
+    {{#writeup.date}}
+        <p>Date: {{writeup.date}}</p>
+    {{/writeup.date}}
 
-{{^writeup.date}}
-    <p>This writeup has no date assigned.</p>
-{{/writeup.date}}
+    {{^writeup.date}}
+        <p>This writeup has no date assigned.</p>
+    {{/writeup.date}}
 
-<p>Text: {{writeup.text}}</p>
+    <p>Text: {{writeup.text}}</p>
 
-{{#image}}
-    <img src="/writeup/{{writeup.id}}/image"> <!-- Use for background, etc -->
-{{/image}}
+    {{#image}}
+        <img src="/writeup/{{writeup.id}}/image"> <!-- Use for background, etc -->
+    {{/image}}
 
-{{^image}}
-    <p>No images found for this writeup.</p>
-{{/image}}
+    {{^image}}
+        <p>No images found for this writeup.</p>
+    {{/image}}
 
-{{#file}}
-    <div class="inline-container">
-        <p>Download link:</p>
-        <a href="/writeup/{{writeup.id}}/file?download=true">Download file</a>
-    </div>
-{{/file}}
+    {{#file}}
+        <div class="inline-container">
+            <p>Download link:</p>
+            <a href="/writeup/{{writeup.id}}/file?download=true">Download file</a>
+        </div>
+    {{/file}}
 
-{{^file}}
-    <p>No files attached to this writeup.</p>
-{{/file}}
-<hr>
-<a href="/writeup/{{writeup.id}}/delete">Delete writeup</a>
-<br>
-<br>
+    {{^file}}
+        <p>No files attached to this writeup.</p>
+    {{/file}}
+    <hr>
+    <a href="/writeup/{{writeup.id}}/delete">Delete writeup</a>
+    <br>
+    <br>
 
-<a href="/">Back</a>
+    <a href="/">Back</a>
 </body>
 </html>

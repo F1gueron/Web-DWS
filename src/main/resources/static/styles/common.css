@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+body {
+    margin: 20px 100px;
+    background-image: url(../images/keyboard_bg.jpg);
+    background-position: center;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    backdrop-filter: blur(10px);
+    padding: 10px 20px 30px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+input, textarea {
+    backdrop-filter: blur(20px);
+    background: transparent;
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
+    outline: none;
+    font-family: "Montserrat", sans-serif;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+
+
+input::placeholder, textarea::placeholder {
+    font-family: "Montserrat", sans-serif;
+}
+
+.submit-btn {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    font-size: 18px;
+    font-family: "Montserrat", sans-serif;
+    padding: 3px 10px;
+    margin-outside: 4px;
+    transition: all 0.3s ease 0s;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.submit-btn:hover {
+    cursor: pointer;
+    background-color: lightsteelblue;
+    transition: all 0.3s ease 0s;
+}
