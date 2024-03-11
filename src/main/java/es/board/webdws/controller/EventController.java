@@ -71,7 +71,7 @@ public class EventController {
         eventService.deleteById(id);
 
         if (!event.getImageName().isEmpty()){
-            imageService.deleteImage(POSTS_FOLDER, event.getImageName());
+            imageService.deleteImage(POSTS_FOLDER, event.getImageName()); //TODO
         }
 
 

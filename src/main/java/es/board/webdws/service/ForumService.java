@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 import es.board.webdws.model.Forum;
+import es.board.webdws.model.Writeup;
 import org.springframework.stereotype.Service;
 
 
@@ -43,4 +44,21 @@ public class ForumService {
         this.forum.remove(id);
     }
 
+    public void edit(Forum newForum) {
+        long id = newForum.getId();
+        Forum existingForum = forum.get(id);
+
+        if (existingForum != null) {
+
+            existingForum.setAuthor(newForum.getAuthor());
+            existingForum.setTitle(newForum.getTitle());
+            existingForum.setText(newForum.getText());
+            existingForum.setImageName(newForum.getImageName());
+            existingForum.setFileName(newForum.getFileName());
+            existingForum.setCategory(newForum.getCategory());
+            existingForum.setComments(newForum.getComments());
+
+            forum.put(id, existingForum);
+        }
+    }
 }

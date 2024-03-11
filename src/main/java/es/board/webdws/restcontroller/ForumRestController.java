@@ -2,6 +2,7 @@ package es.board.webdws.restcontroller;
 
 
 import es.board.webdws.model.Forum;
+import es.board.webdws.model.Comment;
 import es.board.webdws.service.ForumService;
 import es.board.webdws.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,7 @@ public class ForumRestController {
         if (forum != null) {
 
             newForum.setId(id);
-            forumService.save(forum);
+            forumService.edit(newForum);
 
             return ResponseEntity.ok(forum);
         } else {
@@ -76,15 +77,35 @@ public class ForumRestController {
         }
     }
 
-    //Add comment
-    @PostMapping("/forum/{id}/comments")
-    public ResponseEntity<Forum> create_comment(@RequestBody Forum forum){
+    //Delete
+    @DeleteMapping("/forum/{id}")
+    public ResponseEntity<Forum> deleteForum(@PathVariable long id) throws IOException {
 
+        Forum forum = forumService.findById(id);
+
+        if (forum != null) {
+            forumService.deleteById(id);
+
+            if(!forum.getImageName().equals("")) { //TODO
+                this.imageService.deleteImage(POSTS_FOLDER, forum.getImageName());
+            }
+
+            return ResponseEntity.ok(forum);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    //Add comment
+
+    @PostMapping("/forum/{id}/comments")
+    public ResponseEntity<Forum> create_comment(@RequestBody Comment comment, @PathVariable long id){
+
+        Forum forum = forumService.findById(id);
+
+        forum.addComment(comment);
         forumService.save(forum);
 
-        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(forum.getId()).toUri();
-
-        return ResponseEntity.created(location).body(forum);
+        return ResponseEntity.ok(forum);
     }
     //Download File to user
     @PostMapping("forum/{id}/image")
@@ -108,29 +129,12 @@ public class ForumRestController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @GetMapping("forum/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws MalformedURLException {
 
         Forum forum = forumService.findById(id);
         return imageService.createResponseFromImage(POSTS_FOLDER, forum.getImageName());
-    }
-
-    @DeleteMapping("/forum/{id}")
-    public ResponseEntity<Forum> deleteForum(@PathVariable long id) throws IOException {
-
-        Forum forum = forumService.findById(id);
-
-        if (forum != null) {
-            forumService.deleteById(id);
-
-            if(forum.getImageName() != null) {
-                this.imageService.deleteImage(POSTS_FOLDER, forum.getImageName());
-            }
-
-            return ResponseEntity.ok(forum);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @DeleteMapping("/{id}/image")

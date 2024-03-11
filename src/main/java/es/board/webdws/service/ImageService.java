@@ -55,14 +55,18 @@ public class ImageService {
 
         Path folder = FILES_FOLDER.resolve(folderName);
 
+
         Path imagePath = createFilePath(folder, fileName);
 
         Resource file = new UrlResource(imagePath.toUri());
 
+
         if(!Files.exists(imagePath)) {
+            System.out.println("mama");
             return ResponseEntity.notFound().build();
         } else {
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(file);
+            System.out.println("rula");
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "jpeg/image").body(file);
         }
     }
 

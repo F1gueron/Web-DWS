@@ -72,7 +72,7 @@ public class WriteupRestController {
         if (writeup != null) {
 
             newWriteup.setId(id);
-            writeupService.save(writeup);
+            writeupService.edit(newWriteup);
 
             return ResponseEntity.ok(writeup);
         } else {
@@ -90,7 +90,7 @@ public class WriteupRestController {
         if (writeup != null) {
             writeupService.deleteById(id);
 
-            if(writeup.getImageName() != null) {
+            if(!writeup.getImageName().equals("")) { //TODO
                 this.imageService.deleteImage(POSTS_FOLDER, writeup.getImageName());
             }
 

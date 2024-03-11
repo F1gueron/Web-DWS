@@ -49,6 +49,21 @@ public class WriteupService {
         this.writeup.remove(id);
     }
 
+    public void edit(Writeup newWriteup) {
+        long id = newWriteup.getId();
+        Writeup existingWriteup = writeup.get(id);
 
+        if (existingWriteup != null) {
+
+            existingWriteup.setAuthor(newWriteup.getAuthor());
+            existingWriteup.setTitle(newWriteup.getTitle());
+            existingWriteup.setText(newWriteup.getText());
+            existingWriteup.setImageName(newWriteup.getImageName());
+            existingWriteup.setFileName(newWriteup.getFileName());
+            existingWriteup.setCategory(newWriteup.getCategory());
+
+            writeup.put(id, existingWriteup);
+        }
+    }
 
 }

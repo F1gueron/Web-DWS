@@ -40,4 +40,20 @@ public class EventService {
     public void deleteById(long id) {
         this.event.remove(id);
     }
+
+    public void edit(Event newEvent) {
+        long id = newEvent.getId();
+        Event existingEvent = event.get(id);
+
+        if (existingEvent != null) {
+
+            existingEvent.setAuthor(newEvent.getAuthor());
+            existingEvent.setTitle(newEvent.getTitle());
+            existingEvent.setText(newEvent.getText());
+            existingEvent.setImageName(newEvent.getImageName());
+            existingEvent.setCategory(newEvent.getCategory());
+
+            event.put(id, existingEvent);
+        }
+    }
 }

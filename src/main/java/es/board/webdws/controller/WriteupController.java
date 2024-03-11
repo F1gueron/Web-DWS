@@ -110,7 +110,7 @@ public class WriteupController {
 
         writeupService.deleteById(id);
 
-        imageService.deleteImage(POSTS_FOLDER, writeup.getImageName());
+        imageService.deleteImage(POSTS_FOLDER, writeup.getImageName()); //TODO
         fileService.deleteFile(POSTS_FOLDER, writeup.getFileName());
 
         return "deleted_writeup";

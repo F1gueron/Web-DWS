@@ -15,6 +15,8 @@ public class Forum {
 
     private String category = null;
 
+    private List<Comment> comments = new ArrayList<>();
+
     public String getCategory() {
         return category;
     }
@@ -22,8 +24,6 @@ public class Forum {
     public void setCategory(String category) {
         this.category = category;
     }
-
-    private List<Comment> comments = new ArrayList<>();
 
     public List<Comment> getComments() {
         return comments;

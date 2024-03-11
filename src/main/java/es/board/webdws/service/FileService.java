@@ -55,7 +55,7 @@ public class FileService {
             if(download){
                 return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
             }else{
-                return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(file);
+                return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "zip/rar/pdf/txt/7z").body(file);
             }
         }
     }
