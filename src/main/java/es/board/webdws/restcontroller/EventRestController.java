@@ -105,16 +105,7 @@ public class EventRestController {
         return imageService.createResponseFromImage(POSTS_FOLDER, event.getImageName());
     }
 
-    @PostMapping("/{id}/user")
-    public ResponseEntity<Event> addUserToEvent(@PathVariable long id, @RequestParam("name") String name) {
-        Event event = eventService.findById(id);
 
-
-        event.addUser(name);
-        eventService.save(event);
-
-        return ResponseEntity.ok(event);
-    }
 
 
 }

@@ -86,15 +86,6 @@ public class EventController {
         return imageService.createResponseFromImage(POSTS_FOLDER, event.getImageName());
     }
 
-    @PostMapping("/event/{id}/user")
-    public String addUser(@PathVariable long id, @RequestParam("name") String name){
-        Event event = eventService.findById(id);
-
-        event.addUser(name);
-
-
-        return "redirect:/event/{id}";
-    }
 
     //Save files
     private String uploadData(Model model,Event event, MultipartFile image) throws IOException {

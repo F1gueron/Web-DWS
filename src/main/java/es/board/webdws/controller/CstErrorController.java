@@ -34,6 +34,12 @@ public class CstErrorController implements ErrorController {
             else if (status_code == HttpStatus.INTERNAL_SERVER_ERROR.value()){
                 return "../static/error/500";
             }
+            else if (status_code == HttpStatus.UNAUTHORIZED.value()){
+                return "../static/error/401";
+            }
+            else if (status_code == HttpStatus.FORBIDDEN.value()){
+                return "../static/error/403";
+            }
         }
 
         return "../static/error/error";
